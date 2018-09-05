@@ -1,0 +1,32 @@
+#Griewank Function
+#Rastrigin Function	5.12
+#Ackley Function	5
+#Rosenbrock function	Nan
+#Levi Function N13	10
+#Himmelblau's Function	5
+#Easom Function		100
+#Cross in tray Function	10
+#Eggholder Function	512
+#Holder Table Function	10
+#Schaffer Function N2	100
+#Schaffer Function N4	100 
+
+
+
+MaxIt = 0-2000  
+nPop0 = 0-100     
+nPop = nPop0-200 
+Smin = 0-10       
+Smax = 0-10       
+Exponent = 0-50
+sigma_initial = 0-2000
+sigma_final = 0-10
+
+
+1
+2
+3
+5
+16
+17
+
