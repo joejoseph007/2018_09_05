@@ -19,32 +19,40 @@ def run(Arr):
     return result
 
 
-def check(x,y):
+def check(x,y,T,Z=[0]):
     xmax=1
     xmin=0.1
     ymax=5
     ymin=0
-
-    def constraint1(x,y): 
-        value = y+9*x
-        if value>=6:
-            return 1
-        else:
-            return 0
-
-    #Second function to optimize
-    def constraint2(x,y):
-        value = -y+9*x
-        if value>=1:
-            return 1
-        else:
-            return 0
-    if constraint1(x,y) and constraint2(x,y):
-        if x<=xmax and x>=xmin:
-            if y<=ymax and y>=ymin:
+    if T==0:
+        def constraint1(x,y): 
+            value = y+9*x
+            if value>=6:
                 return 1
-    else:
-        return 0
+            else:
+                return 0
+
+        #Second function to optimize
+        def constraint2(x,y):
+            value = -y+9*x
+            if value>=1:
+                return 1
+            else:
+                return 0
+        if constraint1(x,y) and constraint2(x,y):
+            if x<=xmax and x>=xmin:
+                if y<=ymax and y>=ymin:
+                    return 1
+        else:
+            return 0
+    elif T==1:
+
+        Range=numpy.zeros((Z[0],Z[1],2))
+        for i in range(len(Range)):
+            for j in range(len(Range)):
+                for k in range(2):
+
+            return Range
 
 
 

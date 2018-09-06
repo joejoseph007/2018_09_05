@@ -27,3 +27,5 @@ def Cost(X):
 
 
 X1=randf(Row,Col)
+
+print(X1)
