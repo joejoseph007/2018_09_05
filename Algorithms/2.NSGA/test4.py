@@ -204,8 +204,8 @@ while Iter<=Iter_max:
     #plt.savefig('Pics/%i.0.svg'%Iter,s=20,c='red')
     
     plt.scatter(Cost1[0],Cost1[1],s=5,c='black')
-    #plt.ylim(0,35)
-    #plt.xlim(-5,1)
+    plt.ylim(-30,10)
+    plt.xlim(-5,20)
     plt.savefig('Pics/%i.1.svg'%Iter)
     plt.close()
     
