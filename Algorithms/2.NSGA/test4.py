@@ -170,7 +170,7 @@ while Iter<=Iter_max:
 
     #print(CDv)
     #offsprings
-    '''
+    
     Specie_List1=[]
     for i in range(Popn2):
         X1=randf(Row,Col)	
@@ -178,6 +178,7 @@ while Iter<=Iter_max:
         
         Specie_List1[i].Cost_run(Results_Directory %(Iter,i))
         Specie_List1[i].Write(Results_Directory %(Iter,i))
+    
     '''    
     
     Specie_List1=Specie_List
@@ -186,7 +187,7 @@ while Iter<=Iter_max:
         Specie_List1[i].Cost_run(Results_Directory %(Iter,i))
         Specie_List1[i].Write(Results_Directory %(Iter,i))
     
-
+    '''
 
 
     Specie_List1=Specie_List+Specie_List1
