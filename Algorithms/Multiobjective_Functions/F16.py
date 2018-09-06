@@ -1,7 +1,9 @@
 import random, sys, os, math, numpy
-#Viennet function
+#Constr-Ex problem
 
-def run(x,y):
+def run(Arr):
+    x=Arr[0]
+    y=Arr[1]
     result=[0,0]        
     def function1(x,y):
         value = x
@@ -12,7 +14,7 @@ def run(x,y):
     	value=(1+y)/x
     	return value
 
-    result=[function1(x,y),function2(x,y)]
+    result=[-function1(x,y),-function2(x,y)]
 
     return result
 
@@ -45,8 +47,13 @@ def check(x,y):
         return 0
 
 
-#'''
-#print check(0,5)
+
+
+
+#print([[check(i/10,j/10) for i in range(10) ] for j in range(50)])
+
+print (check(1,0))
+'''
 
 
 import matplotlib.pyplot as plt 
@@ -65,7 +72,7 @@ res2=[]
 for i in range(1000):
     X.append(randf(0.1,1))
     Y.append(randf(0,5))
-    res.append(run(X[i],Y[i]))
+    res.append(run([X[i],Y[i]]))
     res1.append(res[i][0])
     res2.append(res[i][1])
 
@@ -75,4 +82,4 @@ plt.scatter(res1,res2)
 plt.show()
 
 
-#'''
+'''

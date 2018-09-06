@@ -11,14 +11,14 @@ Results_Directory='Results/Generation_%i/Specie_%i'
 
 global Row,Col,Func
 
-Row=5
+Row=1
 Col=3
 Func=2
 
-Popn=100
+Popn=120
 
-Popn2=50
-Popn3=100
+Popn2=120
+Popn3=120
 
 Iter=0
 Iter_max=100
@@ -32,15 +32,30 @@ class Specie(object):
 	def __init__(self,X=np.zeros((Row,Col)),Cost=np.zeros(Func)) :
 		self.X = X
 		self.Cost = Cost
-	
+
 	def Cost_run(self,Directory):
 		#from Multiobjective_Functions.F5 import run
 		sys.path.append("../Multiobjective_Functions")
-		import F5 
-		self.Cost=F5.run(self.X[0])
+		import F16
+		self.Cost=F16.run(self.X[0])
 	
 	def New(self,sigma):
-		self.X=self.X+np.random.normal(0,sigma,(len(self.X),len(self.X[0]))) #+randf(len(self.X),len(self.X[0]))*sigma
+		
+        
+        
+        while 1:
+            X=self.X+np.random.normal(0,sigma,(len(self.X),len(self.X[0])))
+            
+            if 
+            
+            Range=np.zeros((Row,Col,2))
+
+            for i in range(len(X)):
+                for j in range(len(X[0])):
+                    X[i][j]=max(X[i][j],Range[i][j][0])
+                    X[i][j]=min(X[i][j],Range[i][j][1])
+                    #print('yes') 
+            return X
 
 
 	def Write(self,Directory):
@@ -62,14 +77,17 @@ class Specie(object):
 	def Cost_list(self,Spc1):
 		return [[Spc1[i].Cost[0] for i in range(len(Spc1))],[Spc1[i].Cost[1] for i in range(len(Spc1))]]
 
+	def XY_list(self,Spc1):
+		return [[Spc1[i].X[0][0] for i in range(len(Spc1))],[Spc1[i].X[0][1] for i in range(len(Spc1))]]
 
 
 
-def randf(r=1,c=1):
+
+def randf(r=1,c=1,min1,max1):
 	R=np.zeros((r,c))
 	for i in range(len(R)):
 		for j in range(len(R[0])):
-			R[i][j]=random.uniform(-20,20)
+			R[i][j]=random.uniform(min1,max1)
 	#random.choice()
 	return R
 
@@ -154,7 +172,9 @@ Iter+=1
 
 while Iter<=Iter_max:
     
-    print(Iter,len(Specie_List))
+    print(Iter)
+    #for i in range(len(Specie_List)):
+    print(Specie_List[0].X,Specie_List[0].Cost)
 
     Cost=Specie_List[0].Cost_list(Specie_List)
     
@@ -170,45 +190,70 @@ while Iter<=Iter_max:
 
     #print(CDv)
     #offsprings
-    
+    '''
     Specie_List1=[]
     for i in range(Popn2):
         X1=randf(Row,Col)	
         Specie_List1.append(Specie(X1))
         
         Specie_List1[i].Cost_run(Results_Directory %(Iter,i))
-        Specie_List1[i].Write(Results_Directory %(Iter,i))
+        #Specie_List1[i].Write(Results_Directory %(Iter,i))
     
     '''    
     
-    Specie_List1=Specie_List
-    for i in range(Popn2):
-        Specie_List1[i].New(0.1)
+    Specie_List1=[]#Specie_List
+    for i in range(len(Specie_List)):
+        Specie_List1.append(Specie(Specie_List[i].New(1/Iter**0.5)))
         Specie_List1[i].Cost_run(Results_Directory %(Iter,i))
         Specie_List1[i].Write(Results_Directory %(Iter,i))
     
-    '''
+    #'''
+
+
 
 
     Specie_List1=Specie_List+Specie_List1
     
     
     
-    print(Iter,len(Specie_List1))
+    #print(Iter,len(Specie_List1))
 
     Cost1=Specie_List[0].Cost_list(Specie_List1)
+
+    xy=Specie_List[0].XY_list(Specie_List)
+    xy1=Specie_List[0].XY_list(Specie_List1)
+
+    #'''
+    plt.ylim(-10,10)
+    plt.xlim(-10,10)
+    #plt.savefig('Pics/%i.0.svg'%Iter,s=20,c='red')
     
-    plt.scatter(Cost[0],Cost[1])
-    #plt.ylim(-70,10)
-    #plt.xlim(-140,10)
+    #plt.scatter(Cost1[0],Cost1[1],s=5,c='black')
+    #plt.scatter(Cost[0],Cost[1])
+    
+    plt.scatter(xy1[0],xy1[1],s=1,c='black')
+    plt.scatter(xy[0],xy[1],s=15,c='blue')
+    
+
+    #plt.ylim(-150,25)
+    #plt.xlim(-150,25)
+    plt.savefig('Pics/0/%i.0.svg'%Iter)
+    plt.close()
+    
+    plt.ylim(-60,10)
+    plt.xlim(-2,0)
     #plt.savefig('Pics/%i.0.svg'%Iter,s=20,c='red')
     
     plt.scatter(Cost1[0],Cost1[1],s=5,c='black')
-    plt.ylim(-30,10)
-    plt.xlim(-5,20)
-    plt.savefig('Pics/%i.1.svg'%Iter)
+    plt.scatter(Cost[0],Cost[1],s=15,c='blue')
+    
+
+    #plt.ylim(-150,25)
+    #plt.xlim(-150,25)
+    plt.savefig('Pics/1/%i.1.svg'%Iter)
     plt.close()
     
+    #'''
 
     NDSa1=fast_non_dominated_sort(Cost1[0],Cost1[1])
 
