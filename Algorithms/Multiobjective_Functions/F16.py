@@ -20,8 +20,9 @@ def run(Arr):
 
 
 def check(Arr,T,Z=[0]):
-    x=Arr[0]
-    y=Arr[1]
+    #print(Arr)
+    x=Arr[0][0]
+    y=Arr[0][1]
     xmax=1
     xmin=0.1
     ymax=5
@@ -49,10 +50,10 @@ def check(Arr,T,Z=[0]):
             return 0
     elif T==1:
         Range=numpy.zeros((Z[0],Z[1],2))
-        Range[0][:][0]=xmin
-        Range[1][:][0]=ymin
-        Range[0][:][1]=xmax
-        Range[1][:][1]=ymax
+        Range[0][0][0]=xmin
+        Range[0][1][0]=ymin
+        Range[0][0][1]=xmax
+        Range[0][1][1]=ymax
         return Range
 #print([[check(i/10,j/10) for i in range(10) ] for j in range(50)])
 
@@ -60,11 +61,35 @@ def check(Arr,T,Z=[0]):
 #Range=numpy.zeros((3,4,2))
 #Range[:][:][0]=2
 #print (Range)
-#print (check(1,0,1,[2,2]))
+#print (check([1,0],1,[2,2]))
 
 
+'''
+
+X=numpy.zeros((1,2))
+sigma=10
+
+def Range_chk_slic(T):    
+    if T==0:
+        if check(X,T):
+            return 1
+        else: 
+            return 0
+    if T==1:
+        Range=check(X,T,[1,2])
+        for i in range(len(X)):
+            for j in range(len(X[0])):
+                X[i][j]=max(X[i][j],Range[i][j][0])
+                X[i][j]=min(X[i][j],Range[i][j][1])
+        return 1
 
 
+while 1:
+    X=X+numpy.random.normal(0,sigma,(len(X),len(X[0])))
+    if Range_chk_slic(X,1):
+        if Range_chk_slic(X,0):
+            break
+'''
 
 
 '''
