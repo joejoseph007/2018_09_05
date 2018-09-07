@@ -19,7 +19,9 @@ def run(Arr):
     return result
 
 
-def check(x,y,T,Z=[0]):
+def check(Arr,T,Z=[0]):
+    x=Arr[0]
+    y=Arr[1]
     xmax=1
     xmin=0.1
     ymax=5
@@ -46,21 +48,25 @@ def check(x,y,T,Z=[0]):
         else:
             return 0
     elif T==1:
-
         Range=numpy.zeros((Z[0],Z[1],2))
-        for i in range(len(Range)):
-            for j in range(len(Range)):
-                for k in range(2):
-
-            return Range
-
-
-
-
-
+        Range[0][:][0]=xmin
+        Range[1][:][0]=ymin
+        Range[0][:][1]=xmax
+        Range[1][:][1]=ymax
+        return Range
 #print([[check(i/10,j/10) for i in range(10) ] for j in range(50)])
 
-print (check(1,0))
+
+#Range=numpy.zeros((3,4,2))
+#Range[:][:][0]=2
+#print (Range)
+#print (check(1,0,1,[2,2]))
+
+
+
+
+
+
 '''
 
 
