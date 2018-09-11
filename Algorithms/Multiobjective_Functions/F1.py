@@ -56,8 +56,9 @@ def check(Arr,T,Z=[0]):
 
 
 '''
-print check(0,5)
+#print check(0,5)
 
+print (check([],1,[1,2]))
 
 import matplotlib.pyplot as plt 
 
@@ -73,7 +74,7 @@ res2=[]
 for i in range(1000):
 	X.append(randf(0,5))
 	Y.append(randf(0,3))
-	res.append(run(X[i],Y[i]))
+	res.append(run([X[i],Y[i]]))
 	res1.append(res[i][0])
 	res2.append(res[i][1])
 

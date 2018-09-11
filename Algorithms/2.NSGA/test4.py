@@ -15,10 +15,10 @@ Row=1
 Col=2
 Func=2
 
-Popn=120
+Popn=60
 
-Popn2=120
-Popn3=120
+Popn2=60
+Popn3=60
 
 Iter=0
 Iter_max=100
@@ -59,15 +59,25 @@ class Specie(object):
 		#import F16
 		self.Cost=F1.run(self.X[0])
 	
-	def New(self,sigma):
+	def New(self,T,sigma=1):
 		#sys.path.append("../Multiobjective_Functions")
 		#import F16
-		while 1:
-			#print("here",self.X)
-			self.X=self.X+np.random.normal(0,sigma,(len(self.X),len(self.X[0])))
-			self.Range_chk_slic(1)
-			if self.Range_chk_slic(0):
-				break
+		if T==1:
+			Range=F1.check(self.X,T,[Row,Col])
+			for i in range(len(self.X)):
+				for j in range(len(self.X[0])):
+					#print (self.X)
+					#print (self.X[i][j])
+					self.X[i][j]=random.uniform(Range[i][j][0],Range[i][j][1])
+			
+		if T==0:
+			while 1:
+				#print("here",self.X)
+				self.X=self.X+np.random.normal(0,sigma,(len(self.X),len(self.X[0])))
+				self.Range_chk_slic(1)
+				if self.Range_chk_slic(0):
+					break
+			
 		#return X
 
 
@@ -96,13 +106,6 @@ class Specie(object):
 
 
 
-def randf(r,c,min1,max1):
-	R=np.zeros((r,c))
-	for i in range(len(R)):
-		for j in range(len(R[0])):
-			R[i][j]=random.uniform(min1,max1)
-	#random.choice()
-	return R
 
 def Cost_Key(Element):
 	return Element.Cost[1]
@@ -176,10 +179,10 @@ def crowding_distance(V1, V2, F):
 Specie_List=[]
 
   
-for i in range(Popn):
-	X1=randf(Row,Col,-5,5)	
-	Specie_List.append(Specie(X1))
+for i in range(Popn):	
+	Specie_List.append(Specie())
 	#print ("here")
+	Specie_List[i].New(1)
 	#Specie_List[i].New(5)
 	Specie_List[i].Cost_run(Results_Directory %(Iter,i))
 	Specie_List[i].Write(Results_Directory %(Iter,i))
@@ -219,7 +222,7 @@ while Iter<=Iter_max:
 	Specie_List1=[]#Specie_List
 	for i in range(len(Specie_List)):
 		Specie_List1.append(Specie())
-		Specie_List[i].New(1/Iter**0.1)
+		Specie_List[i].New(1,2)
 		Specie_List1[i].Cost_run(Results_Directory %(Iter,i))
 		Specie_List1[i].Write(Results_Directory %(Iter,i))
     
