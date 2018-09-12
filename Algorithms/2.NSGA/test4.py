@@ -15,10 +15,10 @@ Row=1
 Col=2
 Func=2
 
-Popn=60
+Popn=200
 
-Popn2=60
-Popn3=60
+Popn2=100
+Popn3=200
 
 Iter=0
 Iter_max=100
@@ -26,7 +26,7 @@ Iter_max=100
 global Specie_List
 
 sys.path.append("../Multiobjective_Functions")
-import F1
+import F16
 
 
 class Specie(object):
@@ -41,12 +41,12 @@ class Specie(object):
 		#import F16
 		
 		if T==0:
-			if F1.check(self.X,T):
+			if F16.check(self.X,T):
 				return 1
 			else: 
 				return 0
 		if T==1:
-			Range=F1.check(self.X,T,[Row,Col])
+			Range=F16.check(self.X,T,[Row,Col])
 			for i in range(len(self.X)):
 				for j in range(len(self.X[0])):
 					self.X[i][j]=max(self.X[i][j],Range[i][j][0])
@@ -57,13 +57,23 @@ class Specie(object):
 	def Cost_run(self,Directory):
 		#sys.path.append("../Multiobjective_Functions")
 		#import F16
-		self.Cost=F1.run(self.X[0])
+		self.Cost=F16.run(self.X[0])
 	
 	def New(self,T,sigma=1):
 		#sys.path.append("../Multiobjective_Functions")
 		#import F16
+		Range=F16.check(self.X,T,[Row,Col])
+		for i in range(len(self.X)):
+			for j in range(len(self.X[0])):
+				if T==1:
+					self.X[i][j]=random.uniform(Range[i][j][0],Range[i][j][1])
+				if T==0:
+					self.X[i][j]=self.X[i][j]+np.random.normal(0,(Range[i][j][1]-Range[i][j][0])*sigma)
+		self.Range_chk_slic(1)
+		if self.Range_chk_slic(0):
+			break
 		if T==1:
-			Range=F1.check(self.X,T,[Row,Col])
+			Range=F16.check(self.X,T,[Row,Col])
 			for i in range(len(self.X)):
 				for j in range(len(self.X[0])):
 					#print (self.X)
@@ -72,11 +82,11 @@ class Specie(object):
 			
 		if T==0:
 			while 1:
+				Range=F16.check(self.X,T,[Row,Col])
+
 				#print("here",self.X)
 				self.X=self.X+np.random.normal(0,sigma,(len(self.X),len(self.X[0])))
-				self.Range_chk_slic(1)
-				if self.Range_chk_slic(0):
-					break
+				
 			
 		#return X
 
@@ -192,7 +202,7 @@ while Iter<=Iter_max:
 
 	#print(Iter)
 	#for i in range(len(Specie_List)):
-	print(Iter,Specie_List[0].X,Specie_List[0].Cost)
+	print(Iter,0.05/Iter**0.1,Specie_List[0].X,Specie_List[0].Cost)
 
 	Cost=Specie_List[0].Cost_list(Specie_List)
 
@@ -220,9 +230,10 @@ while Iter<=Iter_max:
 	'''    
 
 	Specie_List1=[]#Specie_List
-	for i in range(len(Specie_List)):
-		Specie_List1.append(Specie())
-		Specie_List[i].New(1,2)
+	for i in range(Popn2):
+		#Specie_List1.append(Specie())
+		Specie_List1.append(Specie(Specie_List[i].X))
+		Specie_List1[i].New(0,0.05/Iter**0.1)
 		Specie_List1[i].Cost_run(Results_Directory %(Iter,i))
 		Specie_List1[i].Write(Results_Directory %(Iter,i))
     
@@ -254,13 +265,20 @@ while Iter<=Iter_max:
 	plt.scatter(xy[0],xy[1],s=15,c='blue')
 
 
-	#plt.ylim(-150,25)
-	#plt.xlim(-150,25)
 	plt.savefig('Pics/0/%i.0.svg'%Iter)
 	plt.close()
+	
+	#F1
+	#plt.ylim(-60,10)
+	#plt.xlim(-140,10)
+	
+	#F16
+	#plt.ylim(-10,0)
+	#plt.xlim(-1,0)
 
-	plt.ylim(-200,10)
-	plt.xlim(-200,10)
+	#F5
+	plt.ylim(14,-2)
+	plt.xlim(14,20)
 	#plt.savefig('Pics/%i.0.svg'%Iter,s=20,c='red')
 
 	plt.scatter(Cost1[0],Cost1[1],s=5,c='black')
