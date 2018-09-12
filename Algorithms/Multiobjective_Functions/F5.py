@@ -3,6 +3,8 @@ import random, sys, os, math, numpy
 
 def run(Arr):
     result=[0,0]        
+    #Arr=Arr[0]
+    #print( Arr)
     Xi=[Arr[0],Arr[1],Arr[2]]
     n=len(Xi)
     def function1(Arr):
@@ -25,39 +27,27 @@ def run(Arr):
     return result
 
 
-def check(Arr):
-    xmax=20
-    xmin=-20
-    ymax=20
-    ymin=-20
-
-    def constraint1(Arr): 
-        value = Arr[0]**2+Arr[1]**2
-        if value<=225:
-            return 1
-        else:
-            return 0
-
-    #Second function to optimize
-    def constraint2(Arr):
-        value = Arr[0]-3*Arr[1]+10**2+(Arr[1]+3)**2
-        if value<=0:
-            return 1
-        else:
-            return 0
-    if constraint1(Arr) and constraint2(Arr):
-        if Arr[0]<=xmax and Arr[0]>=xmin:
-            if Arr[1]<=ymax and Arr[1]>=ymin:
-                return 1
-    else:
-        return 0
+def check(Arr,T,Z=[0]):
+    xmax=5
+    xmin=-5
+    
+    if T==0:
+        return 1
+    
+    elif T==1:
+        Range=numpy.zeros((Z[0],Z[1],2))
+        for i in range(len(Range[0])):
+            Range[0][i][0]=xmin
+            Range[0][i][1]=xmax
+        
+        return Range
 
 
 
-'''
+#Range=check([1,2,3],1,[1,3])
+#print (Range)
 #print check(0,5)
-
-
+'''
 import matplotlib.pyplot as plt 
 
 def randf(x,y):
@@ -71,7 +61,7 @@ res=[]
 res1=[]
 res2=[]
 
-for i in range(20000):
+for i in range(200000):
 	X.append(randf(-5,5))
 	Y.append(randf(-5,5))
 	Z.append(randf(-5,5))
@@ -81,9 +71,9 @@ for i in range(20000):
 
 
 plt.scatter(res1,res2)
-plt.xlim(-20,-14)
-plt.ylim(-12,0)
+plt.xlim(14,20)
+plt.ylim(-2,14)
 plt.show()
-
-
 '''
+
+
