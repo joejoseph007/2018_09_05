@@ -116,7 +116,7 @@ Popn3=10
 Specie_List2=[]
 for i in range(len(NDSa)):
     NDSa2 = [index_of(NDSa[i][j],NDSa[i] ) for j in range(0,len(NDSa[i]))]
-    print('NDSa',NDSa2)    
+    print('NDSa',NDSa2)    s
     front22 = sort_by_values(NDSa2[:], CDv[i][:])
     print('front22',front22)
     front = [NDSa[i][front22[j]] for j in range(0,len(NDSa[i]))]
@@ -137,3 +137,4 @@ Y2=[Y[i] for i in Specie_List2]
 
 print(X2)
 print(Y2)
+

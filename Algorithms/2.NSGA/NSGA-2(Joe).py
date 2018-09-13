@@ -30,7 +30,6 @@ global Specie_List
 sys.path.append("../Multiobjective_Functions/F1")
 import F
 
-
 class Specie(object):
 
 	def __init__(self,X=np.zeros((Row,Col)),Cost=np.zeros(Func)) :

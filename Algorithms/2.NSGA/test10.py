@@ -5,4 +5,4 @@ from distutils.dir_util import copy_tree
 #import scipy.interpolate as si
 
 print(float(math.inf))
-print(2**1000)
+print(2**100)
