@@ -13,22 +13,22 @@ global Row,Col,Func,Iter
 global Specie_List
 
 Row=1
-Col=30
+Col=2
 Func=2
 
-t=15
+t=3
 Popn=20*t
 
 Popn2=10*t
 Popn3=20*t
 
 Iter=0
-Iter_max=100
+Iter_max=2
 
 global Specie_List
 
-sys.path.append("../Multiobjective_Functions")
-import F11
+sys.path.append("../Multiobjective_Functions/F1")
+import F
 
 
 class Specie(object):
@@ -36,19 +36,19 @@ class Specie(object):
 	def __init__(self,X=np.zeros((Row,Col)),Cost=np.zeros(Func)) :
 		self.X = X
 		self.Cost = Cost
-		#from Multiobjective_Functions.F11 import run
+		#from Multiobjective_Functions.F import run
 		
 	def Range_chk_slic(self,T):
 		#sys.path.append("../Multiobjective_Functions")
-		#import F11
+		#import F
 		
 		if T==0:
-			if F11.check(self.X,T):
+			if F.check(self.X,T):
 				return 1
 			else: 
 				return 0
 		if T==1:
-			Range=F11.check(self.X,T,[Row,Col])
+			Range=F.check(self.X,T,[Row,Col])
 			for i in range(len(self.X)):
 				for j in range(len(self.X[0])):
 					self.X[i][j]=max(self.X[i][j],Range[i][j][0])
@@ -58,17 +58,17 @@ class Specie(object):
 		
 	def Cost_run(self,Directory):
 		#sys.path.append("../Multiobjective_Functions")
-		#import F11
-		self.Cost=F11.run(self.X[0])
+		#import F
+		self.Cost=F.run(self.X[0])
 	
 	def New(self,T,sigma=1):
 		#sys.path.append("../Multiobjective_Functions")
-		#import F11
+		#import F
 		Temp=self.X
 		#print(Temp,self.X)
 		self.X=np.where(self.X>0,0.0,0.0)				
 		
-		Range=F11.check(self.X,1,[Row,Col])
+		Range=F.check(self.X,1,[Row,Col])
 		for i in range(len(self.X)):
 			for j in range(len(self.X[0])):
 				while 1:
@@ -88,7 +88,7 @@ class Specie(object):
 		self.Range_chk_slic(1)
 		'''
 		if T==1:
-			Range=F11.check(self.X,T,[Row,Col])
+			Range=F.check(self.X,T,[Row,Col])
 			for i in range(len(self.X)):
 				for j in range(len(self.X[0])):
 					#print (self.X)
@@ -97,7 +97,7 @@ class Specie(object):
 			
 		if T==0:
 			while 1:
-				Range=F11.check(self.X,T,[Row,Col])
+				Range=F.check(self.X,T,[Row,Col])
 
 				#print("here",self.X)
 				self.X=self.X+np.random.normal(0,sigma,(len(self.X),len(self.X[0])))
@@ -139,7 +139,7 @@ def Cost_Key(Element):
 
 
 def index_of(a,list):
-    for i in range(0,len(list)):
+    for i in range(len(list)):
         if list[i] == a:
             return i
     return -1
@@ -149,7 +149,7 @@ def sort_by_values(l, V):
     while(len(SL)!=len(l)):
         if index_of(min(V),V) in l:
             SL.append(index_of(min(V),V))
-        V[index_of(min(V),V)] = float('inf')
+        V[index_of(min(V),V)] = math.inf
     return SL
 
 def fast_non_dominated_sort(V1, V2):
@@ -192,8 +192,8 @@ def crowding_distance(V1, V2, F):
     D = [0 for i in range(0,len(F))]
     sorted1 = sort_by_values(F, V1[:])
     sorted2 = sort_by_values(F, V2[:])
-    D[0] = 4444444444444444
-    D[len(F) - 1] = 4444444444444444
+    D[0] = math.inf
+    D[len(F) - 1] = math.inf
     for k in range(1,len(F)-1):
         D[k] = D[k]+ (V1[sorted1[k+1]] - V2[sorted1[k-1]])/(max(V1)-min(V1))
     for k in range(1,len(F)-1):
@@ -217,7 +217,7 @@ while Iter<=Iter_max:
 
 	#print(Iter)
 	#for i in range(len(Specie_List)):
-	sigma=1/Iter**1
+	sigma=1/Iter**0.5
 	print(Iter,sigma)
 	print(Specie_List[0].X,Specie_List[0].Cost)
 
@@ -232,6 +232,9 @@ while Iter<=Iter_max:
 	CDv=[]
 	for i in range(0,len(NDSa)):
 		CDv.append(crowding_distance(Cost[0],Cost[1],NDSa[i][:]))
+	
+	#print(NDSa)
+	#print (CDv)
 
 	#print(CDv)
 	#offsprings
@@ -245,25 +248,30 @@ while Iter<=Iter_max:
 		#Specie_List1[i].Write(Results_Directory %(Iter,i))
 
 	'''    
-	def Cost_parallel(i):
+	def Run_parallel(i):
 		global Iter,Specie_List
 		Specie_List1=[]#Specie_List
-		sigma=1/Iter**1
+		sigma=1/Iter**0.5
 		#Specie_List1.append(Specie())
 		Specie_List1.append(Specie(Specie_List[i].X))
 		Specie_List1[0].New(0,sigma)
 		Specie_List1[0].Cost_run(Results_Directory %(Iter,i))
 		Specie_List1[0].Write(Results_Directory %(Iter,i))
-		
-		return Specie_List1
+		#print(Specie_List1[0],Specie_List1[0].Cost)
+		return Specie_List1[0].X,Specie_List1[0].Cost
     #'''
 
-	y = Pool()
-	Specie_List1 = y.map(Cost_parallel,range(Popn2))
+	y = Pool(Popn2)
+	Results = y.map(Run_parallel,range(Popn2))
 	y.close()
 	y.join()    
-        
-	#print(Specie_List1)
+    
+	Specie_List1=[]#Specie_List
+	
+	for i in range(len(Results)):
+		Specie_List1.append(Specie(Results[i][0],Results[i][1]))
+	
+	#print(Specie_List1[0].X)
 
 
 	Specie_List1=Specie_List+Specie_List1
@@ -293,8 +301,8 @@ while Iter<=Iter_max:
 	plt.close()
 	#'''
 	#F1
-	#plt.ylim(-60,10)
-	#plt.xlim(-140,10)
+	plt.ylim(-60,10)
+	plt.xlim(-140,10)
 	
 	#F16
 	#plt.ylim(-10,0)
@@ -305,8 +313,8 @@ while Iter<=Iter_max:
 	#plt.xlim(0,20)
 
 	#F11
-	plt.ylim(-5,5)
-	plt.xlim(-2,2)
+	#plt.ylim(-5,5)
+	#plt.xlim(-2,2)
 	
 	#plt.savefig('Pics/%i.0.svg'%Iter,s=20,c='red')
 
@@ -332,6 +340,7 @@ while Iter<=Iter_max:
 		front22 = sort_by_values(NDSa2[:], CDv1[i][:])
 		front = [NDSa1[i][front22[j]] for j in range(0,len(NDSa1[i]))]
 		front.reverse()
+		#print(front)
 		for value in front:
 			Specie_List2.append(value)
 			if(len(Specie_List2)==Popn3):
@@ -340,7 +349,7 @@ while Iter<=Iter_max:
 			break
 
 	#Specie_List =[]
-
+	print(Specie_List2)
 	Specie_List = [Specie_List1[i] for i in Specie_List2]
 
 

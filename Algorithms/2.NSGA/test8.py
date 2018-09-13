@@ -56,14 +56,14 @@ plt.savefig('check2/0.0.svg')
 
 
 
-#y1=np.zeros(number)
+y1=np.zeros(number)
     
 for j in range(100):
     i=1
     sigma=0.5/(j+1)**0.5
     #sigma=0.2
     #print (sigma)
-    y1=y
+    #y1=y
     while i<(number-1):
         y1[i]=np.random.normal(y[i],(10+10)*sigma)
         i+=1
