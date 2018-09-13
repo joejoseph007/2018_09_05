@@ -1,6 +1,6 @@
 import csv, random, re, sys, os, math, numpy as np, time, subprocess, shutil
 import matplotlib.pyplot as plt 
-import multiprocessing #import Pool
+from multiprocessing import Pool
 from distutils.dir_util import copy_tree
 #import scipy.interpolate as si
 
@@ -9,13 +9,14 @@ Time=time.time()
 Current_Working_Directory=os.getcwd()
 Results_Directory='Results/Generation_%i/Specie_%i'
 
-global Row,Col,Func
+global Row,Col,Func,Iter
+global Specie_List
 
 Row=1
-Col=2
+Col=30
 Func=2
 
-t=5
+t=15
 Popn=20*t
 
 Popn2=10*t
@@ -27,7 +28,7 @@ Iter_max=100
 global Specie_List
 
 sys.path.append("../Multiobjective_Functions")
-import F1
+import F11
 
 
 class Specie(object):
@@ -35,19 +36,19 @@ class Specie(object):
 	def __init__(self,X=np.zeros((Row,Col)),Cost=np.zeros(Func)) :
 		self.X = X
 		self.Cost = Cost
-		#from Multiobjective_Functions.F1 import run
+		#from Multiobjective_Functions.F11 import run
 		
 	def Range_chk_slic(self,T):
 		#sys.path.append("../Multiobjective_Functions")
-		#import F1
+		#import F11
 		
 		if T==0:
-			if F1.check(self.X,T):
+			if F11.check(self.X,T):
 				return 1
 			else: 
 				return 0
 		if T==1:
-			Range=F1.check(self.X,T,[Row,Col])
+			Range=F11.check(self.X,T,[Row,Col])
 			for i in range(len(self.X)):
 				for j in range(len(self.X[0])):
 					self.X[i][j]=max(self.X[i][j],Range[i][j][0])
@@ -57,17 +58,17 @@ class Specie(object):
 		
 	def Cost_run(self,Directory):
 		#sys.path.append("../Multiobjective_Functions")
-		#import F1
-		self.Cost=F1.run(self.X[0])
+		#import F11
+		self.Cost=F11.run(self.X[0])
 	
 	def New(self,T,sigma=1):
 		#sys.path.append("../Multiobjective_Functions")
-		#import F1
+		#import F11
 		Temp=self.X
 		#print(Temp,self.X)
-		self.X=np.where(self.X>0,0,0)				
+		self.X=np.where(self.X>0,0.0,0.0)				
 		
-		Range=F1.check(self.X,1,[Row,Col])
+		Range=F11.check(self.X,1,[Row,Col])
 		for i in range(len(self.X)):
 			for j in range(len(self.X[0])):
 				while 1:
@@ -87,7 +88,7 @@ class Specie(object):
 		self.Range_chk_slic(1)
 		'''
 		if T==1:
-			Range=F1.check(self.X,T,[Row,Col])
+			Range=F11.check(self.X,T,[Row,Col])
 			for i in range(len(self.X)):
 				for j in range(len(self.X[0])):
 					#print (self.X)
@@ -96,7 +97,7 @@ class Specie(object):
 			
 		if T==0:
 			while 1:
-				Range=F1.check(self.X,T,[Row,Col])
+				Range=F11.check(self.X,T,[Row,Col])
 
 				#print("here",self.X)
 				self.X=self.X+np.random.normal(0,sigma,(len(self.X),len(self.X[0])))
@@ -216,7 +217,8 @@ while Iter<=Iter_max:
 
 	#print(Iter)
 	#for i in range(len(Specie_List)):
-	print(Iter)
+	sigma=1/Iter**1
+	print(Iter,sigma)
 	print(Specie_List[0].X,Specie_List[0].Cost)
 
 	Cost=Specie_List[0].Cost_list(Specie_List)
@@ -243,18 +245,25 @@ while Iter<=Iter_max:
 		#Specie_List1[i].Write(Results_Directory %(Iter,i))
 
 	'''    
-
-	Specie_List1=[]#Specie_List
-	for i in range(Popn2):
+	def Cost_parallel(i):
+		global Iter,Specie_List
+		Specie_List1=[]#Specie_List
+		sigma=1/Iter**1
 		#Specie_List1.append(Specie())
 		Specie_List1.append(Specie(Specie_List[i].X))
-		Specie_List1[i].New(0,0.5/Iter**0.01)
-		Specie_List1[i].Cost_run(Results_Directory %(Iter,i))
-		Specie_List1[i].Write(Results_Directory %(Iter,i))
-    
+		Specie_List1[0].New(0,sigma)
+		Specie_List1[0].Cost_run(Results_Directory %(Iter,i))
+		Specie_List1[0].Write(Results_Directory %(Iter,i))
+		
+		return Specie_List1
     #'''
 
-
+	y = Pool()
+	Specie_List1 = y.map(Cost_parallel,range(Popn2))
+	y.close()
+	y.join()    
+        
+	#print(Specie_List1)
 
 
 	Specie_List1=Specie_List+Specie_List1
@@ -284,8 +293,8 @@ while Iter<=Iter_max:
 	plt.close()
 	#'''
 	#F1
-	plt.ylim(-60,10)
-	plt.xlim(-140,10)
+	#plt.ylim(-60,10)
+	#plt.xlim(-140,10)
 	
 	#F16
 	#plt.ylim(-10,0)
@@ -294,6 +303,11 @@ while Iter<=Iter_max:
 	#F5
 	#plt.ylim(-10,14)
 	#plt.xlim(0,20)
+
+	#F11
+	plt.ylim(-5,5)
+	plt.xlim(-2,2)
+	
 	#plt.savefig('Pics/%i.0.svg'%Iter,s=20,c='red')
 
 	plt.scatter(Cost1[0],Cost1[1],s=5,c='black')
