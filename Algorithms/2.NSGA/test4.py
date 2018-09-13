@@ -16,14 +16,14 @@ Row=1
 Col=2
 Func=2
 
-t=3
+t=5
 Popn=20*t
 
 Popn2=10*t
 Popn3=20*t
 
 Iter=0
-Iter_max=2
+Iter_max=50
 
 global Specie_List
 
@@ -192,8 +192,8 @@ def crowding_distance(V1, V2, F):
     D = [0 for i in range(0,len(F))]
     sorted1 = sort_by_values(F, V1[:])
     sorted2 = sort_by_values(F, V2[:])
-    D[0] = math.inf
-    D[len(F) - 1] = math.inf
+    D[0] = 2**100#math.inf
+    D[len(F) - 1] = 2**100 #math.inf
     for k in range(1,len(F)-1):
         D[k] = D[k]+ (V1[sorted1[k+1]] - V2[sorted1[k-1]])/(max(V1)-min(V1))
     for k in range(1,len(F)-1):
@@ -349,7 +349,7 @@ while Iter<=Iter_max:
 			break
 
 	#Specie_List =[]
-	print(Specie_List2)
+	#print(Specie_List2)
 	Specie_List = [Specie_List1[i] for i in Specie_List2]
 
 
