@@ -54,7 +54,7 @@ def check(Arr,T,Z=[0]):
 		Range[0][1][1]=ymax
 		return Range
 
-print (check([0,0],1,[1,2]))
+#print (check([0,0],1,[1,2]))
 '''
 #print check(0,5)
 

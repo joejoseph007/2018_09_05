@@ -45,7 +45,7 @@ def check(x,y):
     else:
         return 0
 
-#'''
+'''
 print check(0,5)
 
 
@@ -71,4 +71,4 @@ plt.scatter(res1,res2)
 plt.show()
 
 
-#'''
+'''
