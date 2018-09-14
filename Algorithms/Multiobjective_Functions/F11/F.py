@@ -1,4 +1,5 @@
 import random, sys, os, math, numpy
+import matplotlib.pyplot as plt 
 #Constr-Ex problem
 
 def run(Arr):
@@ -31,9 +32,9 @@ def run(Arr):
 
 	return result
 
-X=numpy.random.rand(1,30)
+#X=numpy.random.rand(1,30)
 
-run(X[0])
+#run(X[0])
 
 def check(Arr,T,Z=[0]):
     #print(Arr)
@@ -47,6 +48,9 @@ def check(Arr,T,Z=[0]):
 			Range[0][i][0]=xmin
 			Range[0][i][1]=xmax
 		return Range
+
+
+
 #print([[check(i/10,j/10) for i in range(10) ] for j in range(50)])
 
 

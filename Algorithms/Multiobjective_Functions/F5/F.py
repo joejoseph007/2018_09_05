@@ -1,4 +1,6 @@
 import random, sys, os, math, numpy
+import matplotlib.pyplot as plt 
+
 #Kursawe function
 
 def run(Arr):
@@ -41,7 +43,6 @@ def check(Arr,T,Z=[0]):
             Range[0][i][1]=xmax
         
         return Range
-
 
 
 #Range=check([1,2,3],1,[1,3])

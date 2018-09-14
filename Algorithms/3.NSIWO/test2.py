@@ -23,3 +23,8 @@ print(Z)
 
 print(Z[0])
 print(A)
+
+
+T=np.zeros(2)
+T=np.array([1.2,0.90123])
+print('T',T)

@@ -1,4 +1,5 @@
 import random, sys, os, math, numpy
+import matplotlib.pyplot as plt 
 
 #Binh and Korn function
 def run(Arr):
@@ -53,6 +54,7 @@ def check(Arr,T,Z=[0]):
 		Range[0][0][1]=xmax
 		Range[0][1][1]=ymax
 		return Range
+
 
 #print (check([0,0],1,[1,2]))
 '''

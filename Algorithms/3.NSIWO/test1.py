@@ -38,33 +38,48 @@ Specie_List[0].Rank_Assign(Specie_List)
 
 
 while Iter<=Iter_max:
-
+	#import F
 	#print(Iter)
 	#for i in range(len(Specie_List)):
-	sigma=1/Iter**0.5
-	print(Iter,sigma)
+	
+	    
+	#sigma=0.5/Iter**0.5
+	
+	
+	print('Generation',Iter)
 	print(Specie_List[0].X,Specie_List[0].Cost)
 
 	Cost=Specie_List[0].Lists(Specie_List,1)
+	Rank_List=Specie_List[0].Lists(Specie_List,2)
+	Specie_List[0].Rank_Assign(Specie_List)
 
+	#assign number of offspring and 
+	for i in range(len(Specie_List)):
+		ratio = (max(Rank_List)-Specie_List[i].Rank)/(max(Rank_List))
+		S = int(Smin + (Smax - Smin)*ratio)
+		sigma = (((Iter_max - float(Iter))/(Iter_max - 1))**Exponent )* (sigma_initial - sigma_final) + sigma_final
+		sigma1=(((max(Rank_List) - float(Specie_List[i].Rank))/max(Rank_List))**Exponent1 )* (sigma_best - sigma_worst) + sigma_worst;
+		sigma = sigma +sigma1
+		Specie_List[i].Offspring=np.array([S,sigma])
+		#print(Specie_List[i].Rank,Specie_List[i].Offspring)
+	
 	#plt.close()
 
 	#print(NDSa)
-
-
+	
 	def Run_parallel(i):
 		global Iter,Specie_List
 		
 		Specie_List1=[]#Specie_List
-		sigma=1/Iter**0.5
+		#sigma=0.5/Iter**0.5
 		Specie_List1.append(Specie(Specie_List[i].X))
-		Specie_List1[0].New(1,sigma)
+		Specie_List1[0].New(1,Specie_List[i].Offspring[1])
 		Specie_List1[0].Cost_run(Results_Directory %(Iter,i))
 		Specie_List1[0].Read_Write(Results_Directory %(Iter,i),0)
 		
 		return Specie_List1[0].X,Specie_List1[0].Cost
     
-	y = Pool(Popn2)
+	y = Pool()
 	Results = y.map(Run_parallel,range(Popn2))
 	y.close()
 	y.join()    
@@ -80,10 +95,10 @@ while Iter<=Iter_max:
 
 
 
-	Cost1=Specie_List[0].Cost_list(Specie_List1)
+	Cost1=Specie_List[0].Lists(Specie_List1,1)
 	#'''
-	xy=Specie_List[0].XY_list(Specie_List)
-	xy1=Specie_List[0].XY_list(Specie_List1)
+	xy=Specie_List[0].Lists(Specie_List,0)
+	xy1=Specie_List[0].Lists(Specie_List1,0)
 
 	
 	plt.ylim(-10,10)
@@ -104,18 +119,26 @@ while Iter<=Iter_max:
 	#plt.ylim(-60,10)
 	#plt.xlim(-140,10)
 	
+	#F5
+	#plt.ylim(-14,14)
+	#plt.xlim(4,20)
+
+
+	#F11
+	#plt.ylim(-5,0)
+	#plt.xlim(-1.2,0.1)
+
+
+	#F13
+	#plt.ylim(-5,0)
+	#plt.xlim(-1.2,0.1)
+
 	#F16
 	#plt.ylim(-10,0)
 	#plt.xlim(-1,0)
 
-	#F5
-	#plt.ylim(-10,14)
-	#plt.xlim(0,20)
 
-	#F11
-	plt.ylim(-5,5)
-	plt.xlim(-2,2)
-	
+
 	#plt.savefig('Pics/%i.0.svg'%Iter,s=20,c='red')
 
 	plt.scatter(Cost1[0],Cost1[1],s=5,c='black')

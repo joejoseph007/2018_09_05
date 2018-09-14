@@ -10,10 +10,11 @@ from NSGA2 import *
 
 class Specie(object):
 
-	def __init__(self,X=np.zeros((Row,Col)),Cost=np.zeros(Func),Rank=-1) :
+	def __init__(self,X=np.zeros((Row,Col)),Cost=np.zeros(Func),Rank=-1,Offspring=np.zeros(0)) :
 		self.X = X
 		self.Cost = Cost
 		self.Rank = Rank
+		self.Offspring = Offspring
 		#from Multiobjective_Functions.F import run
 		
 					
@@ -76,6 +77,8 @@ class Specie(object):
 			os.chdir(Directory)#"../Results/Generation_%d/Specie_%d/CFD" %(r,e))
 			np.savetxt('Genes',self.X)
 			np.savetxt('Cost',self.Cost)
+			#np.savetxt('Rank',self.Rank)
+			#np.savetxt('Offspring',self.Offspring)
 		
 		if T==1 or T==2:
 			os.chdir(Directory)#"../Results/Generation_%d/Specie_%d/CFD" %(r,e))
@@ -89,7 +92,7 @@ class Specie(object):
 			xy_list=[]#np.zero((Row,Col,len(Spc1)))
 			for k in range(len(Spc1)):
 				for i in range(Row):
-					for j in range(len(Col)):
+					for j in range(Col):
 						xy_list.append(Spc1[k].X[i][j])
 			return xy_list
 		
@@ -99,11 +102,11 @@ class Specie(object):
 				Cost_list.append([Spc1[i].Cost[j] for i in range(len(Spc1))])
 			return Cost_list
 		
-		if T==1: # Cost list
+		if T==2: # Rank list
 			return [Spc1[i].Rank for i in range(len(Spc1))]
 			
 	def Rank_Assign(self,Spc1):
-		Cost=Spc1[0].Cost_list(Spc1)
+		Cost=Spc1[0].Lists(Spc1,1)
 
 		NDSa=fast_non_dominated_sort(Cost[0],Cost[1])
 
