@@ -125,13 +125,13 @@ while Iter<=Iter_max:
 
 
 	#F11
-	#plt.ylim(-5,0)
-	#plt.xlim(-1.2,0.1)
+	plt.ylim(-5,0)
+	plt.xlim(-1.2,0.1)
 
 
 	#F13
-	#plt.ylim(-5,0)
-	#plt.xlim(-1.2,0.1)
+	#plt.ylim(-10,9)
+	#plt.xlim(-1.1,-0.8)
 
 	#F16
 	#plt.ylim(-10,0)
@@ -141,8 +141,8 @@ while Iter<=Iter_max:
 
 	#plt.savefig('Pics/%i.0.svg'%Iter,s=20,c='red')
 
-	plt.scatter(Cost1[0],Cost1[1],s=5,c='black')
-	plt.scatter(Cost[0],Cost[1],s=15,c='blue')
+	plt.scatter(Cost1[0],Cost1[1],s=2,c='black')
+	plt.scatter(Cost[0],Cost[1],s=5,c='blue')
 	plt.savefig('Pics/1/%i.1.svg'%Iter)
 	plt.close()
 

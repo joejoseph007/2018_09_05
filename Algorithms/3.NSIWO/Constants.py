@@ -4,10 +4,10 @@ global Row,Col,Func,Iter
 global Specie_List
 
 Row=1
-Col=10
+Col=30
 Func=2
 
-t=2
+t=3
 Popn=20*t
 
 Popn2=10*t
@@ -21,7 +21,7 @@ Exponent = 2
 aSigma_init=0.1
 aSigma_final=0.005
 
-Social_factor=0.05
+Social_factor=0.075
 
 
 sigma_initial = aSigma_init*(1-Social_factor)
@@ -40,6 +40,6 @@ Iter_max=100
 Current_Working_Directory=os.getcwd()
 Results_Directory='Results/Generation_%i/Specie_%i'
 
-sys.path.append("../Multiobjective_Functions/F13")
+sys.path.append("../Multiobjective_Functions/F11")
 import F
 

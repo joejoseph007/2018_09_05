@@ -28,7 +28,7 @@ def run(Arr):
 		return value
 	
 	#print(function4(Arr))
-	result=[function1(Arr),function2(Arr)]
+	result=[-function1(Arr),-function2(Arr)]
 
 	return result
 
