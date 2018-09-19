@@ -16,60 +16,8 @@ class Specie(object):
 		self.Rank = Rank
 		self.Offspring = Offspring #['Number of offspring','Sigma']
 		#from Multiobjective_Functions.F import run
-		
-					
-		
-	def Cost_run(self,Directory):
-		#sys.path.append("../Multiobjective_Functions")
-		#import F
-		self.Cost=F.run(self.X[0])
 
-	def Range_chk_slic(self,T):
-		#sys.path.append("../Multiobjective_Functions")
-		#import F
-		
-		if T==0:
-			if F.check(self.X,T):
-				return 1
-			else: 
-				return 0
-		if T==1:
-			Range=F.check(self.X,T,[Row,Col])
-			for i in range(len(self.X)):
-				for j in range(len(self.X[0])):
-					self.X[i][j]=max(self.X[i][j],Range[i][j][0])
-					self.X[i][j]=min(self.X[i][j],Range[i][j][1])
-			#return 1
-	
-	def New(self,T,sigma=1,Specie=[]):
-		#sys.path.append("../Multiobjective_Functions")
-		#import F
-		Temp=self.X
-		#print(Temp,self.X)
-		self.X=np.where(self.X>0,0.0,0.0)				
-		Range=F.check(self.X,1,[Row,Col])
-		k=0
-		#print(self.Offspring)
-		#while k<=int(self.Offspring[0]):
-		for i in range(len(self.X)):
-			for j in range(len(self.X[0])):
-				while 1:
-					if T==0:
-						self.X[i][j]=random.uniform(Range[i][j][0],Range[i][j][1])
-						if self.Range_chk_slic(0):
-							break
-					if T==1:
-						self.X[i][j]=np.random.normal(Temp[i][j],(Range[i][j][1]-Range[i][j][0])*sigma)
-						if self.Range_chk_slic(0):
-							break
-					if T==2:
-						self.X[i][j]=Specie[0].X[i][j]
-						if self.Range_chk_slic(0):
-							break
-		#k+=1	
-		#self.X=np.round(self.X,3)
-		self.Range_chk_slic(1)
-		
+
 	def Read_Write(self,Directory,T):
 		#T=0 for only write
 		#T=1 for only read
@@ -90,7 +38,64 @@ class Specie(object):
 			self.Cost=np.loadtxt('Cost')
 		
 		os.chdir(Current_Working_Directory)
+	
+					
+		
+	def Cost_run(self,Directory):
+		#sys.path.append("../Multiobjective_Functions")
+		#import F
+		self.Cost=F.run(self.X)
 
+	def Range_chk_slic(self,T):
+		#sys.path.append("../Multiobjective_Functions")
+		#import F
+		
+		if T==0:
+			if F.check(self.X,T):
+				return 1
+			else: 
+				return 0
+		if T==1:
+			Range=F.check(self.X,T,[Row,Col])
+			for i in range(len(self.X)):
+				for j in range(len(self.X[0])):
+					self.X[i][j]=max(self.X[i][j],Range[i][j][0])
+					self.X[i][j]=min(self.X[i][j],Range[i][j][1])
+			#return 1
+	
+	def New(self,X,T,sigma=1,Specie=[]):
+		#sys.path.append("../Multiobjective_Functions")
+		#import F
+		Temp=self.X
+		#print(Temp,self.X)
+		self.X=np.where(self.X>0,0.0,0.0)				
+		Range=F.check(self.X,1,[Row,Col])
+		k=0
+		#print(self.Offspring)
+		#while k<=int(self.Offspring[0]):
+
+		
+		for i in range(len(self.X)):
+			for j in range(len(self.X[0])):
+				while 1:
+					if T==0:
+						self.X[i][j]=random.uniform(Range[i][j][0],Range[i][j][1])
+						if self.Range_chk_slic(0):
+							break
+					if T==1:
+						self.X[i][j]=np.random.normal(Temp[i][j],(Range[i][j][1]-Range[i][j][0])*sigma)
+						if self.Range_chk_slic(0):
+							break
+					if T==2:
+						self.X[i][j]=Specie[0].X[i][j]
+						if self.Range_chk_slic(0):
+							break
+		#k+=1	
+		#self.X=np.round(self.X,3)
+		self.Range_chk_slic(1)
+		return X
+		
+	
 	def Lists(self,Spc1,T):
 		if T==0: # XY points
 			x=[]#np.zero((Row,Col,len(Spc1)))
@@ -117,15 +122,11 @@ class Specie(object):
 			
 	def Rank_Assign(self,Spc1):
 		Cost=Spc1[0].Lists(Spc1,1)
-
 		NDSa=fast_non_dominated_sort(Cost[0],Cost[1])
-
 		#print(NDSa)
-
 		CDv=[]
 		for i in range(0,len(NDSa)):
 			CDv.append(crowding_distance(Cost[0],Cost[1],NDSa[i][:]))
-
 		Rank_List=[]
 		for i in range(0,len(NDSa)):
 			NDSa2 = [index_of(NDSa[i][j],NDSa[i] ) for j in range(0,len(NDSa[i]))]
@@ -139,7 +140,6 @@ class Specie(object):
 					break
 			if (len(Rank_List) == len(Spc1)):
 				break
-
 		for i in range(len(Spc1)):
 			Spc1[i].Rank=Rank_List[i] 
 

@@ -46,7 +46,9 @@ def check(Arr,T,Z=[0]):
 
 
 #Range=check([1,2,3],1,[1,3])
-#print (Range)
+
+Range=check([],1,[1,3])
+#print (Range[:][:][0])
 #print check(0,5)
 '''
 import matplotlib.pyplot as plt 

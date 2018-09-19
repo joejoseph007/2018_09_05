@@ -25,20 +25,12 @@ Specie_List=[]
 
 #Generation 0 // Uniformly random
 for i in range(Popn):	
-	Specie_List.append(Specie())
-	#print ("here")
-	#print(Specie_List[i].X,Specie_List[i].Cost,Specie_List[i].Offspring)
+	Spc=Specie()
+	#Specie_List.append(Spc.New())
 	Specie_List[i].New(0)
-	#Specie_List[i].New(5)
-	Specie_List[i].Cost_run(Results_Directory %(Iter,i))
-	Specie_List[i].Read_Write(Results_Directory %(Iter,i),0)
 Iter+=1
 
 
-
-def Roundoff(List):
-	List=np.round(List,3)
-	return List
 
 
 
@@ -50,13 +42,15 @@ def Run_parallel(i):
 	Specie_List1.append(Specie(Specie_List[i].X))
 	
 	if Iter ==0:
-		Specie_List[i].New(0)
+		Specie_List[i].Cost_run(Results_Directory %(Iter,i))
+		Specie_List[i].Read_Write(Results_Directory %(Iter,i),0)
+		
 	else:
 		Specie_List1[0].New(1,Specie_List[i].Offspring[1])
-	
-	Specie_List1[0].Cost_run(Results_Directory %(Iter,i))
-	Specie_List1[0].Read_Write(Results_Directory %(Iter,i),0)
-	
+		
+		Specie_List1[0].Cost_run(Results_Directory %(Iter,i))
+		Specie_List1[0].Read_Write(Results_Directory %(Iter,i),0)
+		
 	return Specie_List1[0].X,Specie_List1[0].Cost#Roundoff(Specie_List1[0].X),Roundoff(Specie_List1[0].Cost)
   
 
