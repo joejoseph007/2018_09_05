@@ -93,6 +93,13 @@ while Iter<=Iter_max:
 	y.close()
 	y.join()    
     
+
+
+
+
+
+
+	
 	Specie_List1=[]#Specie_List
 	
 	for i in range(len(Results)):
@@ -164,32 +171,9 @@ while Iter<=Iter_max:
 
 	#'''
 
-	NDSa1=fast_non_dominated_sort(Cost1[0],Cost1[1])
+	Rank_List=Specie_List[0].Rank_Assign(Specie_List1)
 
-	CDv1=[]
-	for i in range(0,len(NDSa1)):
-		CDv1.append(crowding_distance(Cost1[0],Cost1[1],NDSa1[i][:]))
+	Specie_List = [Specie_List1[i] for i in Rank_List]
 
-
-
-	Specie_List2=[]
-
-	for i in range(0,len(NDSa1)):
-		NDSa2 = [index_of(NDSa1[i][j],NDSa1[i] ) for j in range(0,len(NDSa1[i]))]
-		front22 = sort_by_values(NDSa2[:], CDv1[i][:])
-		front = [NDSa1[i][front22[j]] for j in range(0,len(NDSa1[i]))]
-		front.reverse()
-		#print(front)
-		for value in front:
-			Specie_List2.append(value)
-			if(len(Specie_List2)==Popn3):
-				break
-		if (len(Specie_List2) == Popn3):
-			break
-
-	#Specie_List =[]
-	#print(Specie_List2)
-	Specie_List = [Specie_List1[i] for i in Specie_List2]
-
-
+	
 	Iter+=1

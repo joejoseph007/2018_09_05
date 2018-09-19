@@ -63,17 +63,12 @@ class Specie(object):
 					self.X[i][j]=min(self.X[i][j],Range[i][j][1])
 			#return 1
 	
-	def New(self,X,T,sigma=1,Specie=[]):
-		#sys.path.append("../Multiobjective_Functions")
-		#import F
-		Temp=self.X
-		#print(Temp,self.X)
-		self.X=np.where(self.X>0,0.0,0.0)				
+	def New(self,T,X=np.zeros((Row,Col)),sigma=1,Specie=[]):
+		
+		
+		
 		Range=F.check(self.X,1,[Row,Col])
-		k=0
-		#print(self.Offspring)
-		#while k<=int(self.Offspring[0]):
-
+		
 		
 		for i in range(len(self.X)):
 			for j in range(len(self.X[0])):
@@ -83,7 +78,7 @@ class Specie(object):
 						if self.Range_chk_slic(0):
 							break
 					if T==1:
-						self.X[i][j]=np.random.normal(Temp[i][j],(Range[i][j][1]-Range[i][j][0])*sigma)
+						X[i][j]=np.random.normal(self.X[i][j],(Range[i][j][1]-Range[i][j][0])*sigma)
 						if self.Range_chk_slic(0):
 							break
 					if T==2:
@@ -142,6 +137,8 @@ class Specie(object):
 				break
 		for i in range(len(Spc1)):
 			Spc1[i].Rank=Rank_List[i] 
+		
+		return Rank_List
 
 
 
