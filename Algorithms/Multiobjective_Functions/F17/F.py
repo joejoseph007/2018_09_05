@@ -1,7 +1,9 @@
 import random, sys, os, math, numpy
 #Viennet function
 
-def run(x,y):
+def run(Arr):
+    x=Arr[0]
+    y=Arr[1]
     result=[0,0]        
     def function1(x,y):
         value = 0.5*(x**2+y**2)+math.sin(x**2+y**2)
@@ -16,38 +18,26 @@ def run(x,y):
         value = 1/(x**2+y**2+1)-1.1*math.exp(-(x**2+y**2))
         return value
 
-    result=[function1(x,y),function2(x,y),function3(x,y)]
+    result=[-function2(x,y),-function1(x,y),-function3(x,y)]
 
     return result
 
 
-def check(x,y):
+
+def check(Arr,T,Z=[0]):
     xmax=3
     xmin=-3
-    ymax=3
-    ymin=-3
-
-    def constraint1(x,y): 
-        value = 0
-        if value<=225:
-            return 1
-        else:
-            return 0
-
-    #Second function to optimize
-    def constraint2(x,y):
-        value = 0
-        if value<=0:
-            return 1
-        else:
-            return 0
-    if constraint1(x,y) and constraint2(x,y):
-        if x<=xmax and x>=xmin:
-            if y<=ymax and y>=ymin:
-                return 1
-    else:
-        return 0
-
+    
+    if T==0:
+        return 1
+    
+    elif T==1:
+        Range=numpy.zeros((Z[0],Z[1],2))
+        for i in range(len(Range[0])):
+            Range[0][i][0]=xmin
+            Range[0][i][1]=xmax
+        
+        return Range
 
 
 '''

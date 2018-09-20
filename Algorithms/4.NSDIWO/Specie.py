@@ -72,16 +72,16 @@ class Specie(object):
 		
 		for i in range(len(self.X)):
 			for j in range(len(self.X[0])):
-				while 1:
-					if T==0:
-						self.X[i][j]=random.uniform(Range[i][j][0],Range[i][j][1])
-						if self.Range_chk_slic(0):
-							break
-					if T==1:
-						self.X[i][j]=np.random.normal(Z[i][j],(Range[i][j][1]-Range[i][j][0])*sigma)
-						if self.Range_chk_slic(0):
-							break
-					#if T==2:
+				#while 1:
+				if T==0:
+					self.X[i][j]=random.uniform(Range[i][j][0],Range[i][j][1])
+					#if self.Range_chk_slic(0):
+					#	break
+				if T==1:
+					self.X[i][j]=np.random.normal(Z[i][j],(Range[i][j][1]-Range[i][j][0])*sigma)
+					#if self.Range_chk_slic(0):
+					#	break
+				#if T==2:
 						#self.X[i][j]=Specie[0].X[i][j]
 						#if self.Range_chk_slic(0):
 							#break

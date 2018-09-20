@@ -173,12 +173,12 @@ while Iter<=Iter_max:
 	'''
 	#'''
 	#F1
-	plt.ylim(-60,10)
-	plt.xlim(-140,10)
+	#plt.ylim(-60,10)
+	#plt.xlim(-140,10)
 	
 	#F5
-	#plt.ylim(-14,14)
-	#plt.xlim(4,20)
+	plt.ylim(-14,14)
+	plt.xlim(4,20)
 
 
 	#F11
@@ -197,13 +197,46 @@ while Iter<=Iter_max:
 
 
 	#plt.savefig('Pics/%i.0.svg'%Iter,s=20,c='red')
-
+	'''
 	plt.scatter(Cost1[0],Cost1[1],s=1.5,c='black')
 	plt.scatter(Cost[0],Cost[1],s=3.5,c='blue')
 	plt.savefig('Pics/1/%i.1.svg'%Iter)
 	plt.close()
-
+	'''
 	#'''
+	
+	fig = plt.figure()
+	ax = fig.gca(projection='3d')
+	ax.scatter(Cost1[0],Cost1[1],Cost1[2],s=1.5,c='black')
+	ax.scatter(Cost[0],Cost[1],Cost[2],s=1.5,c='black')
+	plt.xlim(-17,-14)
+	plt.ylim(-8,0)
+	plt.savefig('Pics/1/0.%i.svg'%Iter)
+	plt.close()
+	
+
+	plt.scatter(Cost1[0],Cost1[1],s=1.5,c='black')
+	plt.scatter(Cost[0],Cost[1],s=3.5,c='blue')
+	plt.xlim(-17,-14)
+	plt.ylim(-8,0)
+	plt.savefig('Pics/1/1.%i.svg'%Iter)
+	plt.close()
+	
+	
+	plt.scatter(Cost1[1],Cost1[2],s=1.5,c='black')
+	plt.scatter(Cost[1],Cost[2],s=3.5,c='blue')
+	plt.xlim(-8,0)
+	plt.ylim(-0.2,0.2)
+	plt.savefig('Pics/1/2.%i.svg'%Iter)
+	plt.close()
+	
+	plt.scatter(Cost1[2],Cost1[0],s=1.5,c='black')
+	plt.scatter(Cost[2],Cost[0],s=3.5,c='blue')
+	plt.ylim(-17,-14)
+	plt.xlim(-0.2,0.2)
+	plt.savefig('Pics/1/3.%i.svg'%Iter)
+	plt.close()
+	
 
 	Rank_List=Specie_List[0].Rank_Assign(Specie_List1)
 
