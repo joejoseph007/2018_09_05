@@ -100,7 +100,7 @@ class Specie(object):
 			for k in range(len(Spc1)):
 				x.append(Spc1[k].X[0][0])
 				y.append(Spc1[k].X[0][1])
-				z.append(Spc1[k].X[0][2])
+				#z.append(Spc1[k].X[0][2])
 			
 			#xy_list.append(x,y)
 			#print (xy_list)

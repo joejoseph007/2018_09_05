@@ -14,9 +14,9 @@ from Constants import *
 from NSGA2 import *
 from Specie import *
 
-global Specie_List,sigma
+global Specie_List,sigma,Obj_call
 Specie_List=[]
-
+Obj_call=0
 
 #if __name__ == "__main__":
 
@@ -43,7 +43,7 @@ def Roundoff(List):
 
 
 def Run_parallel(i):
-	global Iter,Specie_List
+	global Iter,Specie_List,Obj_call
 	
 	Specie_List1=[]#Specie_List
 	#sigma=0.5/Iter**0.5
@@ -56,7 +56,7 @@ def Run_parallel(i):
 	
 	Specie_List1[0].Cost_run(Results_Directory %(Iter,i))
 	Specie_List1[0].Read_Write(Results_Directory %(Iter,i),0)
-	
+	Obj_call+=1
 	return Specie_List1[0].X,Specie_List1[0].Cost#Roundoff(Specie_List1[0].X),Roundoff(Specie_List1[0].Cost)
   
 
@@ -121,6 +121,7 @@ while Iter<=Iter_max:
 	#plt.scatter(Cost1[0],Cost1[1],s=5,c='black')
 	#plt.scatter(Cost[0],Cost[1])
 	#print (xy1)
+	'''
 	fig = plt.figure()
 	ax = fig.gca(projection='3d')
 	ax.scatter(xy1[0],xy1[1],xy1[2],s=1.5,c='black')
@@ -136,14 +137,15 @@ while Iter<=Iter_max:
 
 	plt.savefig('Pics/0/%i.0.svg'%Iter)
 	plt.close()
+	'''
 	#'''
 	#F1
-	#plt.ylim(-60,10)
-	#plt.xlim(-140,10)
+	plt.ylim(-60,10)
+	plt.xlim(-140,10)
 	
 	#F5
-	plt.ylim(-14,14)
-	plt.xlim(4,20)
+	#plt.ylim(-14,14)
+	#plt.xlim(4,20)
 
 
 	#F11
@@ -199,3 +201,10 @@ while Iter<=Iter_max:
 
 
 	Iter+=1
+
+
+
+thefile = open('FinalCalls', 'w')
+thefile.write("%i" %Obj_call)
+thefile.close()    
+    

@@ -3,18 +3,18 @@ import os,sys
 global Row,Col,Func,Iter
 global Specie_List
 
-Row=1
-Col=3
+Row=2
+Col=2
 Func=2
 
-t=5
+t=3
 Popn=20*t
 
 Popn2=10*t
 Popn3=20*t
 
-Smin=3
-Smax=0.5
+Smin=2
+Smax=0
 
 Exponent = 4
 
@@ -40,6 +40,6 @@ Iter_max=100
 Current_Working_Directory=os.getcwd()
 Results_Directory='Results/Generation_%i/Specie_%i'
 
-sys.path.append("../Multiobjective_Functions/F5")
+sys.path.append("../Multiobjective_Functions/F1")
 import F
 
