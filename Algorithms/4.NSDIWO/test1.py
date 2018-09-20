@@ -21,41 +21,58 @@ Specie_List=[]
 #if __name__ == "__main__":
 
 
+def Run_parallel(i):
+	global Iter
+	Specie_List1=Specie()#Specie_List
+	Specie_List1.Read_Write(Results_Directory %(Iter,i),1)
+	Specie_List1.Cost_run(Results_Directory %(Iter,i))
+	Specie_List1.Read_Write(Results_Directory %(Iter,i),0)
+	return Specie_List1.X,Specie_List1.Cost#Roundoff(Specie_List1[0].X),Roundoff(Specie_List1[0].Cost)
+
 
 
 #Generation 0 // Uniformly random
 for i in range(Popn):	
-	Spc=Specie()
-	#Specie_List.append(Spc.New())
+	Specie_List.append(Specie())
 	Specie_List[i].New(0)
-Iter+=1
+	Specie_List[i].Read_Write(Results_Directory %(Iter,i),0)
 
 
 
+#time.sleep(100)
+y = Pool()
+y.map(Run_parallel,range(Popn))
+#Results = y.map(Run_parallel,range(Popn))
+y.close()
+y.join()    
 
 
-def Run_parallel(i):
-	global Iter,Specie_List
+'''
+for i in range(len(Specie_List)):
+	print(Specie_List[i].X,Specie_List[i].Cost)
+'''
+
+for i in range(len(Specie_List)):
+	Specie_List[i].Read_Write(Results_Directory %(Iter,i),1)
 	
-	Specie_List1=[]#Specie_List
-	#sigma=0.5/Iter**0.5
-	Specie_List1.append(Specie(Specie_List[i].X))
-	
-	if Iter ==0:
-		Specie_List[i].Cost_run(Results_Directory %(Iter,i))
-		Specie_List[i].Read_Write(Results_Directory %(Iter,i),0)
-		
-	else:
-		Specie_List1[0].New(1,Specie_List[i].Offspring[1])
-		
-		Specie_List1[0].Cost_run(Results_Directory %(Iter,i))
-		Specie_List1[0].Read_Write(Results_Directory %(Iter,i),0)
-		
-	return Specie_List1[0].X,Specie_List1[0].Cost#Roundoff(Specie_List1[0].X),Roundoff(Specie_List1[0].Cost)
-  
+	#Specie_List[i].Read_Write(Results_Directory %(Iter,i),0)
+	#print (Specie_List[i].X,Specie_List[i].Cost)
 
+
+Cost=Specie_List[0].Lists(Specie_List,1)
 Specie_List[0].Rank_Assign(Specie_List)
+Rank_List=Specie_List[0].Lists(Specie_List,2)
 
+
+for i in range(len(Specie_List)):
+	print(Specie_List[i].X,Specie_List[i].Cost,Specie_List[i].Rank)
+	Specie_List[i].Read_Write(Results_Directory %(Iter,i),0)
+	
+	#Specie_List[i].Read_Write(Results_Directory %(Iter,i),0)
+	#print (Specie_List[i].X,Specie_List[i].Cost)
+
+
+Iter+=1
 
 while Iter<=Iter_max:
 	#import F
@@ -69,31 +86,44 @@ while Iter<=Iter_max:
 	print('Generation',Iter)
 	print(Specie_List[0].X,Specie_List[0].Cost)
 
-	Cost=Specie_List[0].Lists(Specie_List,1)
-	Rank_List=Specie_List[0].Lists(Specie_List,2)
-	Specie_List[0].Rank_Assign(Specie_List)
 
 	#assign number of offspring and sigma
 	for i in range(len(Specie_List)):
 		ratio = (max(Rank_List)-Specie_List[i].Rank)/(max(Rank_List))
 		S = int(Smin + (Smax - Smin)*ratio)
+		#print (S)
 		sigma = (((Iter_max - float(Iter))/(Iter_max - 1))**Exponent )* (sigma_initial - sigma_final) + sigma_final
 		sigma1=(((max(Rank_List) - float(Specie_List[i].Rank))/max(Rank_List))**Exponent1 )* (sigma_best - sigma_worst) + sigma_worst;
 		sigma = sigma +sigma1
 		Specie_List[i].Offspring=np.array([S,sigma])
+		
 		#print(Specie_List[i].Rank,Specie_List[i].Offspring)
 	
 	#plt.close()
 
 	#print(NDSa)
-	
+	#print(len(Specie_List))
+
+	g=0
+	for i in range(len(Specie_List)):
+		S,sigma=int(Specie_List[i].Offspring[0]),Specie_List[i].Offspring[1]
+		#print('S',S)
+		if S>0:
+			for j in range(S):
+				Specie_Offspring=Specie()
+				Specie_Offspring.New(1,Specie_List[i].X,sigma)
+				Specie_Offspring.Read_Write(Results_Directory %(Iter,g),0)
+				g+=1
     
+
+
+	
 	y = Pool()
-	Results = y.map(Run_parallel,range(Popn2))
+	Results = y.map(Run_parallel,range(g))
 	y.close()
 	y.join()    
     
-
+	
 
 
 
@@ -104,16 +134,23 @@ while Iter<=Iter_max:
 	
 	for i in range(len(Results)):
 		Specie_List1.append(Specie(Results[i][0],Results[i][1]))
+		Specie_Offspring.Read_Write(Results_Directory %(Iter,g),0)
+
 
 
 	Specie_List1=Specie_List+Specie_List1
-
-
-
+	
+	#print(g)
+	#print(len(Specie_List))
+	#print(len(Specie_List1))
 
 	Cost1=Specie_List[0].Lists(Specie_List1,1)
+	print('Here')
+	#print(len(Specie_List))
 	#'''
+	
 	xy=Specie_List[0].Lists(Specie_List,0)
+	#print(xy)
 	xy1=Specie_List[0].Lists(Specie_List1,0)
 
 	
@@ -175,5 +212,16 @@ while Iter<=Iter_max:
 
 	Specie_List = [Specie_List1[i] for i in Rank_List]
 
-	
+	del Specie_List[Popn2:]
+
+	Cost=Specie_List[0].Lists(Specie_List,1)
+
+	Rank_List=Specie_List[0].Lists(Specie_List,2)
+	Specie_List[0].Rank_Assign(Specie_List)
+
+	for i in range(len(Specie_List)):
+		#Specie_List[i].Cost=Results[i][1]
+		Specie_List[i].Read_Write(Parent_Directory %(Iter,i),0)
+
+
 	Iter+=1

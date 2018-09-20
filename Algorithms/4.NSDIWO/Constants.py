@@ -7,11 +7,11 @@ Row=1
 Col=3
 Func=2
 
-t=5
+t=1
 Popn=20*t
 
 Popn2=10*t
-Popn3=20*t
+#Popn3=20*t
 
 Smin=3
 Smax=0.5
@@ -39,7 +39,7 @@ Iter_max=100
 
 Current_Working_Directory=os.getcwd()
 Results_Directory='Results/Generation_%i/Specie_%i'
-
+Parent_Directory='Results/Generation_%i/Population/Specie_%i'
 sys.path.append("../Multiobjective_Functions/F5")
 import F
 

@@ -9,13 +9,34 @@ from NSGA2 import *
 from Specie import *
 
 
-
+'''
 Specie_List=[]
 Specie_List.append(Specie.New(0,0))
 Specie_List1=Specie()
 Specie_List1.New(0,0)
 Specie_List[0].New(0,0)
+'''
 
+
+a=[10,9,8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8,9,0]
+
+del a[5:]
+
+print (a)
+A=Specie()
+A.X[0][0]=123
+
+print(A.X)
+
+B=A
+B.X[0][1]=321
+
+print(A.X)
+
+
+
+
+#Specie.Cost_run('Pics')
 
 '''
 Row=2

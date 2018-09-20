@@ -29,8 +29,8 @@ class Specie(object):
 			os.chdir(Directory)#"../Results/Generation_%d/Specie_%d/CFD" %(r,e))
 			np.savetxt('Genes',self.X)
 			np.savetxt('Cost',self.Cost)
-			#np.savetxt('Rank',self.Rank)
-			#np.savetxt('Offspring',self.Offspring)
+			np.savetxt('Rank',[self.Rank])
+			np.savetxt('Offspring',self.Offspring)
 		
 		if T==1 or T==2:
 			os.chdir(Directory)#"../Results/Generation_%d/Specie_%d/CFD" %(r,e))
@@ -63,7 +63,7 @@ class Specie(object):
 					self.X[i][j]=min(self.X[i][j],Range[i][j][1])
 			#return 1
 	
-	def New(self,T,X=np.zeros((Row,Col)),sigma=1,Specie=[]):
+	def New(self,T,Z=np.zeros((Row,Col)),sigma=1):
 		
 		
 		
@@ -78,17 +78,17 @@ class Specie(object):
 						if self.Range_chk_slic(0):
 							break
 					if T==1:
-						X[i][j]=np.random.normal(self.X[i][j],(Range[i][j][1]-Range[i][j][0])*sigma)
+						self.X[i][j]=np.random.normal(Z[i][j],(Range[i][j][1]-Range[i][j][0])*sigma)
 						if self.Range_chk_slic(0):
 							break
-					if T==2:
-						self.X[i][j]=Specie[0].X[i][j]
-						if self.Range_chk_slic(0):
-							break
+					#if T==2:
+						#self.X[i][j]=Specie[0].X[i][j]
+						#if self.Range_chk_slic(0):
+							#break
 		#k+=1	
 		#self.X=np.round(self.X,3)
 		self.Range_chk_slic(1)
-		return X
+		#return X
 		
 	
 	def Lists(self,Spc1,T):
@@ -96,8 +96,10 @@ class Specie(object):
 			x=[]#np.zero((Row,Col,len(Spc1)))
 			y=[]
 			z=[]
+			#print(Spc1[0].X[0])
 			#xy_list=[]
 			for k in range(len(Spc1)):
+				#print(k)
 				x.append(Spc1[k].X[0][0])
 				y.append(Spc1[k].X[0][1])
 				z.append(Spc1[k].X[0][2])
