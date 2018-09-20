@@ -44,7 +44,7 @@ class Specie(object):
 	def Cost_run(self,Directory):
 		#sys.path.append("../Multiobjective_Functions")
 		#import F
-		self.Cost=F.run(self.X)
+		self.Cost=F.run(self.X[0])
 
 	def Range_chk_slic(self,T):
 		#sys.path.append("../Multiobjective_Functions")

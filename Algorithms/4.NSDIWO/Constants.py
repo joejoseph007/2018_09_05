@@ -3,25 +3,25 @@ import os,sys
 global Row,Col,Func,Iter
 global Specie_List
 
-Row=1
+Row=2
 Col=3
 Func=2
 
-t=1
+t=3
 Popn=20*t
 
 Popn2=10*t
 #Popn3=20*t
 
-Smin=3
-Smax=0.5
+Smin=2
+Smax=0
 
-Exponent = 4
+Exponent = 3
 
 aSigma_init=0.1
 aSigma_final=0.00001
 
-Social_factor=0.3
+Social_factor=0.001
 
 
 sigma_initial = aSigma_init*(1-Social_factor)

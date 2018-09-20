@@ -14,19 +14,19 @@ from Constants import *
 from NSGA2 import *
 from Specie import *
 
-global Specie_List,sigma
+global Specie_List,sigma,Obj_call
+
 Specie_List=[]
-
-
-#if __name__ == "__main__":
+Obj_call=0
 
 
 def Run_parallel(i):
-	global Iter
+	global Iter,Obj_call
 	Specie_List1=Specie()#Specie_List
 	Specie_List1.Read_Write(Results_Directory %(Iter,i),1)
 	Specie_List1.Cost_run(Results_Directory %(Iter,i))
 	Specie_List1.Read_Write(Results_Directory %(Iter,i),0)
+	Obj_call+=1
 	return Specie_List1.X,Specie_List1.Cost#Roundoff(Specie_List1[0].X),Roundoff(Specie_List1[0].Cost)
 
 
@@ -47,11 +47,6 @@ y.close()
 y.join()    
 
 
-'''
-for i in range(len(Specie_List)):
-	print(Specie_List[i].X,Specie_List[i].Cost)
-'''
-
 for i in range(len(Specie_List)):
 	Specie_List[i].Read_Write(Results_Directory %(Iter,i),1)
 	
@@ -59,18 +54,14 @@ for i in range(len(Specie_List)):
 	#print (Specie_List[i].X,Specie_List[i].Cost)
 
 
-Cost=Specie_List[0].Lists(Specie_List,1)
-Specie_List[0].Rank_Assign(Specie_List)
-Rank_List=Specie_List[0].Lists(Specie_List,2)
-
-
+'''
 for i in range(len(Specie_List)):
 	print(Specie_List[i].X,Specie_List[i].Cost,Specie_List[i].Rank)
 	Specie_List[i].Read_Write(Results_Directory %(Iter,i),0)
 	
 	#Specie_List[i].Read_Write(Results_Directory %(Iter,i),0)
 	#print (Specie_List[i].X,Specie_List[i].Cost)
-
+'''
 
 Iter+=1
 
@@ -78,6 +69,10 @@ while Iter<=Iter_max:
 	#import F
 	#print(Iter)
 	#for i in range(len(Specie_List)):
+
+	Cost=Specie_List[0].Lists(Specie_List,1)
+	Specie_List[0].Rank_Assign(Specie_List)
+	Rank_List=Specie_List[0].Lists(Specie_List,2)
 	
 	    
 	#sigma=0.5/Iter**0.5
@@ -85,7 +80,6 @@ while Iter<=Iter_max:
 	
 	print('Generation',Iter)
 	print(Specie_List[0].X,Specie_List[0].Cost)
-
 
 	#assign number of offspring and sigma
 	for i in range(len(Specie_List)):
@@ -111,6 +105,7 @@ while Iter<=Iter_max:
 		if S>0:
 			for j in range(S):
 				Specie_Offspring=Specie()
+				#print(Specie_List[i].X)
 				Specie_Offspring.New(1,Specie_List[i].X,sigma)
 				Specie_Offspring.Read_Write(Results_Directory %(Iter,g),0)
 				g+=1
@@ -134,7 +129,7 @@ while Iter<=Iter_max:
 	
 	for i in range(len(Results)):
 		Specie_List1.append(Specie(Results[i][0],Results[i][1]))
-		Specie_Offspring.Read_Write(Results_Directory %(Iter,g),0)
+		Specie_List1[i].Read_Write(Results_Directory %(Iter,g),0)
 
 
 
@@ -145,7 +140,7 @@ while Iter<=Iter_max:
 	#print(len(Specie_List1))
 
 	Cost1=Specie_List[0].Lists(Specie_List1,1)
-	print('Here')
+	#print('Here')
 	#print(len(Specie_List))
 	#'''
 	
