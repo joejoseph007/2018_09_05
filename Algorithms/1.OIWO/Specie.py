@@ -119,25 +119,12 @@ class Specie(object):
 			return [Spc1[i].Rank for i in range(len(Spc1))]
 			
 	def Rank_Assign(self,Spc1):
-		Cost=Spc1[0].Lists(Spc1,1)
-		NDSa=fast_non_dominated_sort(Cost[0],Cost[1])
-		#print(NDSa)
-		CDv=[]
-		for i in range(0,len(NDSa)):
-			CDv.append(crowding_distance(Cost[0],Cost[1],NDSa[i][:]))
-		Rank_List=[]
-		for i in range(0,len(NDSa)):
-			NDSa2 = [index_of(NDSa[i][j],NDSa[i] ) for j in range(0,len(NDSa[i]))]
-			front22 = sort_by_values(NDSa2[:], CDv[i][:])
-			front = [NDSa[i][front22[j]] for j in range(0,len(NDSa[i]))]
-			front.reverse()
-			#print(front)
-			for value in front:
-				Rank_List.append(value)
-				if(len(Rank_List)==len(Spc1)):
-					break
-			if (len(Rank_List) == len(Spc1)):
-				break
+		Cost1=Spc1[0].Lists(Spc1,1)
+		Cost=[[i,Cost1[i]]for i in range(len(Cost1))]
+		def takeSecond(elem):
+		    return elem[1]
+		Rank_List1=sorted(Cost,key=takeSecond)
+		Rank_List=[Rank_List1[i][0] for i in range(len(Rank_List1))]
 		for i in range(len(Spc1)):
 			Spc1[i].Rank=Rank_List[i] 
 		

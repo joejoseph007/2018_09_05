@@ -16,27 +16,30 @@ Specie_List1=Specie()
 Specie_List1.New(0,0)
 Specie_List[0].New(0,0)
 '''
+def takeSecond(elem):
+    return elem[1]
 
 
+'''
 a=[10,9,8,7,6,5,4,3,2,1,1,2,3,4,5,6,7,8,9,0]
 
-del a[5:]
+b=[[i,a[i]]for i in range(len(a))]
 
-print (a)
-A=Specie()
-A.X[0][0]=123
-
-print(A.X)
-
-B=A
-B.X[0][1]=321
-
-print(A.X)
+print (b)
 
 
+c=sorted(b,key=takeSecond)#Specie.Cost_run('Pics')
 
 
-#Specie.Cost_run('Pics')
+print (c)
+
+'''
+
+
+a=math.inf
+b=-a
+print(2**1000)
+
 
 '''
 Row=2

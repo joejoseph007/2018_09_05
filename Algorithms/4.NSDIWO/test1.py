@@ -175,8 +175,8 @@ while Iter<=Iter_max:
 	#'''
 	#'''
 	#F1
-	plt.ylim(-60,10)
-	plt.xlim(-140,10)
+	#plt.ylim(-60,10)
+	#plt.xlim(-140,10)
 	
 	#F5
 	#plt.ylim(-14,14)
@@ -184,8 +184,8 @@ while Iter<=Iter_max:
 
 
 	#F11
-	#plt.ylim(-5,0)
-	#plt.xlim(-1.2,0.1)
+	plt.ylim(-5,0)
+	plt.xlim(-1.2,0.1)
 
 
 	#F13
