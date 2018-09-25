@@ -1,6 +1,8 @@
 import random, sys, os, math, numpy
 #Three-hump camel function  
-def run([x,y]):
+def run(Arr):
+	x=Arr[0]
+	y=Arr[1]
 	return 2*x**2-1.05*x**4+x**6/6+x*y+y**2
 
 

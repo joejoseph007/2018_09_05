@@ -1,6 +1,8 @@
 import random, sys, os, math, numpy
 #Matyas function
-def run([x,y]):
+def run(Arr):
+	x=Arr[0]
+	y=Arr[1]
 	return 0.26*(x**2+y**2)-0.48*x*y
 
 def check(Arr,T,Z=[0]):

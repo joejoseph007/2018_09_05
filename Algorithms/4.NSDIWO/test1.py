@@ -164,6 +164,11 @@ while Iter<=Iter_max:
 	#plt.zlim(-2,2)
 	#plt.zlim(-10,10)
 	'''
+
+	
+
+	
+	
 	plt.scatter(xy1[0],xy1[1],s=1.5,c='black')
 	plt.scatter(xy[0],xy[1],s=3.5,c='blue')
 	
@@ -178,14 +183,17 @@ while Iter<=Iter_max:
 	#plt.ylim(-60,10)
 	#plt.xlim(-140,10)
 	
+	plt.ylim(-10,60)
+	plt.xlim(-10,140)
+	
 	#F5
 	#plt.ylim(-14,14)
 	#plt.xlim(4,20)
 
 
 	#F11
-	plt.ylim(-5,0)
-	plt.xlim(-1.2,0.1)
+	#plt.ylim(-5,0)
+	#plt.xlim(-1.2,0.1)
 
 
 	#F13

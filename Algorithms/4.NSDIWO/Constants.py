@@ -4,7 +4,7 @@ global Row,Col,Func,Iter
 global Specie_List
 
 Row=2
-Col=30
+Col=2
 Func=2
 
 t=4
@@ -42,6 +42,6 @@ Iter_max=100
 Current_Working_Directory=os.getcwd()
 Results_Directory='Results/Generation_%i/Specie_%i'
 Parent_Directory='Results/Generation_%i/Population/Specie_%i'
-sys.path.append("../Multiobjective_Functions/F11")
+sys.path.append("../Multiobjective_Functions/F1")
 import F
 

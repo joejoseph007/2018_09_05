@@ -1,6 +1,8 @@
 import random, sys, os, math, numpy
 #Cross in tray Function
-def run([x,y]):
+def run(Arr):
+	x=Arr[0]
+	y=Arr[1]
 	return -0.0001*((numpy.fabs(numpy.sin(x)*numpy.sin(y)*numpy.exp(numpy.fabs(100-numpy.sqrt(x**2+y**2)/numpy.pi)))+1)**0.1)
 
 def check(Arr,T,Z=[0]):

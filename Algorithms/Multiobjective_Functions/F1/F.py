@@ -14,7 +14,7 @@ def run(Arr):
 	    value = (Arr[0]-5)**2+(Arr[1]-5)**2
 	    return value
 	
-	result=[-function1(Arr),-function2(Arr)]
+	result=[function1(Arr),function2(Arr)]
 
 	return result
 

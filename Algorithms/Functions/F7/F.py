@@ -1,6 +1,8 @@
 import random, sys, os, math, numpy
 #Booth function
-def run([x,y]):
+def run(Arr):
+	x=Arr[0]
+	y=Arr[1]
 	a=(x+2*y-7)**2
 	b=(2*x+y-5)**2
 	return a*b

@@ -1,10 +1,10 @@
 import random, sys, os, math, numpy
 #McCormick function
 def run(Arr):
-	sum=0	
-	for i in range(len(X):
-		sum=sum+(Arr[i]**4-16*Arr[i]**2+5*Arr[i])/2
-	return sum
+	sum1=0	
+	for i in range(len(X)):
+		sum1=sum1+(Arr[i]**4-16*Arr[i]**2+5*Arr[i])/2
+	return sum1
 
 def check(Arr,T,Z=[0]):
 	xmax=5

@@ -36,9 +36,24 @@ print (c)
 '''
 
 
-a=math.inf
-b=-a
-print(2**1000)
+delta = 5
+X = np.arange(-600.0, 600.0, delta)
+Y = np.arange(-600.0, 600.0, delta)
+x, y = np.meshgrid(X, Y)
+
+#Z=(X**2 + Y**2)/4000-np.cos(X/2**(0.5))*np.cos(Y/2**(0.5))+1
+#Z=-20*np.exp(-0.2*np.sqrt(0.5*(X**2+Y**2)))-np.exp(0.5*(np.cos(2*np.pi*x)+np.cos(2*np.pi*Y)))+np.e+20
+Z=-(y+47)*np.sin(np.sqrt(np.fabs(x/2+y+47)))-x*np.sin(np.sqrt(np.fabs(x-y-47)))
+#Z1 = np.exp(-X**2 - Y**2)
+#Z2 = np.exp(-(X - 1)**2 - (Y - 1)**2)
+
+#Z = (Z1 - Z2) * 2
+
+fig, ax = plt.subplots()
+CS = ax.contour(X, Y, Z,50)
+#ax.clabel(CS, inline=1, fontsize=10)
+ax.set_title('Simplest default with labels')
+plt.show()
 
 
 '''

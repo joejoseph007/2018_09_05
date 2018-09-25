@@ -1,6 +1,8 @@
 import random, sys, os, math, numpy
 #Himmelblau's Function 
-def run([x,y]):
+def run(Arr):
+	x=Arr[0]
+	y=Arr[1]
 	return (x**2+y**2-11)**2+(x+y**2-7)**2
 
 def check(Arr,T,Z=[0]):

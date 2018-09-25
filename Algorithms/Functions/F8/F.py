@@ -1,6 +1,8 @@
 import random, sys, os, math, numpy
 #Bukin function N.6
-def run([x,y]):
+def run(Arr):
+	x=Arr[0]
+	y=Arr[1]
 	return 100*(numpy.fabs(y-0.01*x**2))**0.5+0.01*numpy.fabs(x+10)
 	 
 def check(Arr,T,Z=[0]):

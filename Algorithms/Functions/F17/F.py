@@ -1,6 +1,8 @@
 import random, sys, os, math, numpy
 #McCormick function
-def run(x,y):
+def run(Arr):
+	x=Arr[0]
+	y=Arr[1]
 	return math.sin(x+y)+(x-y)**2-1.5*x+2.5*y+1
 
 def check(Arr,T,Z=[0]):
