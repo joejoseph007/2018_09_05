@@ -10,7 +10,7 @@ from NSGA2 import *
 
 class Specie(object):
 
-	def __init__(self,X=np.zeros((Row,Col)),Cost=np.zeros(Func),Rank=-1,Offspring=np.zeros(2)) :
+	def __init__(self,X=np.zeros((Row,Col)),Cost=math.inf,Rank=-1,Offspring=np.zeros(2)) :
 		self.X = X
 		self.Cost = Cost
 		self.Rank = Rank
@@ -29,14 +29,15 @@ class Specie(object):
 				os.makedirs(Directory)
 			os.chdir(Directory)#"../Results/Generation_%d/Specie_%d/CFD" %(r,e))
 			np.savetxt('Genes',self.X)
-			np.savetxt('Cost',self.Cost)
+			#print(self.Cost)
+			np.savetxt('Cost',[self.Cost])
 			np.savetxt('Rank',[self.Rank])
 			np.savetxt('Offspring',self.Offspring)
 		
 		if T==1 or T==2:
 			os.chdir(Directory)#"../Results/Generation_%d/Specie_%d/CFD" %(r,e))
 			self.X=np.loadtxt('Genes')
-			self.Cost=np.loadtxt('Cost')
+			self.Cost=float(np.loadtxt('Cost'))
 		
 		os.chdir(Current_Working_Directory)
 	
@@ -110,9 +111,10 @@ class Specie(object):
 			return [x,y,z]
 		
 		if T==1: # Cost list
+			#print(Spc1[0].Cost)
 			Cost_list=[]
-			for j in range(len(Spc1[0].Cost)):
-				Cost_list.append([Spc1[i].Cost[j] for i in range(len(Spc1))])
+			for i in range(len(Spc1)):
+				Cost_list.append(Spc1[i].Cost)
 			return Cost_list
 		
 		if T==2: # Rank list
@@ -121,9 +123,12 @@ class Specie(object):
 	def Rank_Assign(self,Spc1):
 		Cost1=Spc1[0].Lists(Spc1,1)
 		Cost=[[i,Cost1[i]]for i in range(len(Cost1))]
+		#print (Cost)
 		def takeSecond(elem):
 		    return elem[1]
 		Rank_List1=sorted(Cost,key=takeSecond)
+
+		
 		Rank_List=[Rank_List1[i][0] for i in range(len(Rank_List1))]
 		for i in range(len(Spc1)):
 			Spc1[i].Rank=Rank_List[i] 

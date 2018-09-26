@@ -7,8 +7,8 @@ def run(Arr):
 
 
 def check(Arr,T,Z=[0]):
-	xmax=5
-	xmin=-5
+	xmax=50
+	xmin=-50
 	
 	if T==0:
 		return 1

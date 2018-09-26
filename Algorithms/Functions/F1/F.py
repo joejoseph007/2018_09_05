@@ -21,3 +21,6 @@ def check(Arr,T,Z=[0]):
 		Range[0][0][1]=xmax
 		Range[0][1][1]=ymax
 		return Range
+
+
+#print(run([-10,10]))

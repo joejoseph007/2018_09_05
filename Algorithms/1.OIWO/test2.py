@@ -35,7 +35,30 @@ print (c)
 
 '''
 
+x=-1.0
 
+
+
+np.savetxt('test',[x])
+
+z=float(np.loadtxt('test'))
+
+
+print(type(x),type(z))
+print(x,z)
+
+
+
+
+
+
+
+
+
+
+
+
+'''
 delta = 5
 X = np.arange(-600.0, 600.0, delta)
 Y = np.arange(-600.0, 600.0, delta)
@@ -53,7 +76,8 @@ fig, ax = plt.subplots()
 CS = ax.contour(X, Y, Z,50)
 #ax.clabel(CS, inline=1, fontsize=10)
 ax.set_title('Simplest default with labels')
-plt.show()
+'''
+#plt.show()
 
 
 '''
