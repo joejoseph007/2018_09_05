@@ -162,7 +162,7 @@ while Iter<=Iter_max:
 	
 	lenth=len(Taboo_list)
 	for i in range(len(Temp)):
-		Taboo_list.append(Temp[i])
+		Taboo_list.append(Temp[i]) 123
 		Taboo_list[lenth+i].Taboo=(((50-Iter)/50)**10)*(10-0.0001)+0.0001#(Specie_List[0].Cost-Taboo_list[lenth+i].Cost)/Specie_List[0].Cost)/2
 		#print(Taboo_list[lenth+i].Taboo)
 	
