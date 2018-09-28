@@ -139,7 +139,7 @@ class Specie(object):
 			if (len(Rank_List) == len(Spc1)):
 				break
 		for i in range(len(Spc1)):
-			Spc1[i].Rank=Rank_List[i] 
+			Spc1[Rank_List[i]].Rank=i 
 		
 		return Rank_List
 

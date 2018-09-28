@@ -8,9 +8,9 @@ Col=2
 Func=1
 
 t=1
-Popn=30*t
+Popn=20*t
 
-Popn2=20*t
+Popn2=10*t
 #Popn3=20*t
 
 
@@ -20,9 +20,9 @@ Smin=0
 Exponent = 3
 
 aSigma_init=0.2
-aSigma_final=0.005
+aSigma_final=0.001
 
-Social_factor=0.3
+Social_factor=0.0003
 
 
 sigma_initial = aSigma_init*(1-Social_factor)
@@ -37,11 +37,11 @@ sigma_worst = aSigma_init*(Social_factor)
 
 
 Iter=0
-Iter_max=100
+Iter_max=20
 
 Current_Working_Directory=os.getcwd()
 Results_Directory='Results/Generation_%i/Specie_%i'
 Parent_Directory='Results/Generation_%i/Population/Specie_%i'
-sys.path.append("../Functions/F18")
+sys.path.append("../Functions/F14")
 import F
 

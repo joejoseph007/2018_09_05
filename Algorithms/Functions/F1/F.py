@@ -20,6 +20,11 @@ def check(Arr,T,Z=[0]):
 		Range[0][1][0]=ymin
 		Range[0][0][1]=xmax
 		Range[0][1][1]=ymax
+		Range[1][0][0]=xmin
+		Range[1][1][0]=ymin
+		Range[1][0][1]=xmax
+		Range[1][1][1]=ymax
+		
 		return Range
 
 

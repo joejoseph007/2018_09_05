@@ -183,8 +183,8 @@ while Iter<=Iter_max:
 	#plt.ylim(-60,10)
 	#plt.xlim(-140,10)
 	
-	plt.ylim(-10,60)
-	plt.xlim(-10,140)
+	#plt.ylim(-10,60)
+	#plt.xlim(-10,140)
 	
 	#F5
 	#plt.ylim(-14,14)
@@ -192,8 +192,8 @@ while Iter<=Iter_max:
 
 
 	#F11
-	#plt.ylim(-5,0)
-	#plt.xlim(-1.2,0.1)
+	plt.ylim(-5,0)
+	plt.xlim(-1.2,0.1)
 
 
 	#F13
@@ -253,7 +253,9 @@ while Iter<=Iter_max:
 	Rank_List=Specie_List[0].Rank_Assign(Specie_List1)
 
 	Specie_List = [Specie_List1[i] for i in Rank_List]
-
+	
+	#Specie_List = [Specie_List1[i] for i in range(len(Rank_List))]
+	#Specie_List=Specie_List1
 	del Specie_List[Popn2:]
 
 	Cost=Specie_List[0].Lists(Specie_List,1)

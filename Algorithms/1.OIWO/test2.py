@@ -35,28 +35,48 @@ print (c)
 
 '''
 
-x=-1.0
+z=[2,3,4,5,6,7,8,9,10]
 
 
+sigma=0.5
 
-np.savetxt('test',[x])
+'''
+while 1:
+    T=random.random()*10
+    time.sleep(1)
+    print(T)
+    for i in range(len(z)):
+        print("Range",z[i]-sigma,z[i]+sigma)
+        if T<=z[i]+sigma and T>=z[i]-sigma: 
+            print(i)            
+'''
+qwe1=[]
+for qwe in range(100):
+    while 1:
+        t=1
+        T=random.random()*10
+        for i in range(len(z)):
+            if (T>=z[i]-sigma and T<=z[i]+sigma):
+                t=0
+                break       
+        if t==1:
+            break
+    qwe1.append(T)
+    print(T)
 
-z=float(np.loadtxt('test'))
+#plt.plot(qwe1)
+#plt.show()
 
 
-print(type(x),type(z))
-print(x,z)
+print(len([]))
 
+'''
+T=-1
 
+if T>z[i] for i in range(len(z)):
+    print(T) 
 
-
-
-
-
-
-
-
-
+'''
 
 '''
 delta = 5

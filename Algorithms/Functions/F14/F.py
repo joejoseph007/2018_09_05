@@ -17,5 +17,8 @@ def check(Arr,T,Z=[0]):
 		for i in range(len(Range[0])):
 			Range[0][i][0]=xmin
 			Range[0][i][1]=xmax
+			Range[1][i][0]=xmin
+			Range[1][i][1]=xmax
+		
 		return Range
 

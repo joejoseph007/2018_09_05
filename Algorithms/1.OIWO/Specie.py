@@ -10,11 +10,12 @@ from NSGA2 import *
 
 class Specie(object):
 
-	def __init__(self,X=np.zeros((Row,Col)),Cost=math.inf,Rank=-1,Offspring=np.zeros(2)) :
+	def __init__(self,X=np.zeros((Row,Col)),Cost=math.inf,Rank=-1,Offspring=np.zeros(2),Taboo=1) :
 		self.X = X
 		self.Cost = Cost
 		self.Rank = Rank
 		self.Offspring = Offspring #['Number of offspring','Sigma']
+		self.Taboo = Taboo
 		self.Range=F.check(self.X,1,[Row,Col])
 		#from Multiobjective_Functions.F import run
 
@@ -65,7 +66,7 @@ class Specie(object):
 					self.X[i][j]=min(self.X[i][j],Range[i][j][1])
 			#return 1
 	
-	def New(self,T,Z=np.zeros((Row,Col)),sigma=1):
+	def New(self,T,Z=np.zeros((Row,Col)),sigma=1,Taboo_list=[]):
 		
 		
 		
@@ -74,19 +75,40 @@ class Specie(object):
 		
 		for i in range(len(self.X)):
 			for j in range(len(self.X[0])):
-				#while 1:
-				if T==0:
-					self.X[i][j]=random.uniform(Range[i][j][0],Range[i][j][1])
-					#if self.Range_chk_slic(0):
-					#	break
-				if T==1:
-					self.X[i][j]=np.random.normal(Z[i][j],(Range[i][j][1]-Range[i][j][0])*sigma)
-					#if self.Range_chk_slic(0):
-					#	break
-				#if T==2:
-						#self.X[i][j]=Specie[0].X[i][j]
+				while 1:
+					if T==0:
+						self.X[i][j]=random.uniform(Range[i][j][0],Range[i][j][1])
 						#if self.Range_chk_slic(0):
-							#break
+						break
+					if T==1:
+						self.X[i][j]=np.random.normal(Z[i][j],(Range[i][j][1]-Range[i][j][0])*sigma)
+						#print(self.X[i][j],Z[i][j])#,Taboo_list[k].X[i][j],sigma1)
+						#time.sleep(5)
+						#'''
+						if (len(Taboo_list)):
+							temp=1
+							for k in range(len(Taboo_list)):
+								#print("self.X[i][j]",self.X[i][j],sigma)
+								sigma1=Taboo_list[k].Taboo
+								if (self.X[i][j]>=Taboo_list[k].X[i][j]-sigma1 and self.X[i][j]<=Taboo_list[k].X[i][j]+sigma1):
+									
+									#time.sleep(1)
+									temp=0
+									#print('duplicate')
+									break       
+							if temp==1:
+								break
+						else:
+							break
+						#'''
+						#for i in range(len(Taboo_list)):
+						
+						#if self.Range_chk_slic(0):
+						#	break
+					#if T==2:
+							#self.X[i][j]=Specie[0].X[i][j]
+							#if self.Range_chk_slic(0):
+								#break
 		#k+=1	
 		#self.X=np.round(self.X,3)
 		self.Range_chk_slic(1)
