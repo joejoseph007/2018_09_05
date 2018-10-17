@@ -19,7 +19,7 @@ Smin=0
 
 Exponent = 3
 
-aSigma_init=0.2
+aSigma_init=0.1
 aSigma_final=0.001
 
 Social_factor=0.0003

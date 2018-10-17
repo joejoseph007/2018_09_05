@@ -7,7 +7,7 @@ Row=2
 Col=30
 Func=2
 
-t=5
+t=3
 Popn=20*t
 
 Popn2=20*t
