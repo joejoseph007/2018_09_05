@@ -1,4 +1,4 @@
-import csv, random, re, sys, os, math, numpy as np, time, subprocess, shutil
+	import csv, random, re, sys, os, math, numpy as np, time, subprocess, shutil
 import matplotlib.pyplot as plt 
 from multiprocessing import Pool
 from distutils.dir_util import copy_tree

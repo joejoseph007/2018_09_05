@@ -7,22 +7,22 @@ Row=2
 Col=2
 Func=1
 
-t=1
+t=3
 Popn=20*t
 
 Popn2=10*t
 #Popn3=20*t
 
 
-Smax=3
-Smin=0
+Smax=4
+Smin=1
 
 Exponent = 3
 
 aSigma_init=0.1
 aSigma_final=0.001
 
-Social_factor=0.0003
+Social_factor=0.003
 
 
 sigma_initial = aSigma_init*(1-Social_factor)
@@ -37,7 +37,7 @@ sigma_worst = aSigma_init*(Social_factor)
 
 
 Iter=0
-Iter_max=20
+Iter_max=100
 
 Current_Working_Directory=os.getcwd()
 Results_Directory='Results/Generation_%i/Specie_%i'
