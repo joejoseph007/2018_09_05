@@ -20,11 +20,9 @@ class Specie(object):
 
 
 	def Read_Write(self,Directory,T):
-		#T=0 for only write
-		#T=1 for only read
-		#T=2 for both Write and Read		
-		
-		if T==0 or T==2: 
+		#T=r,w,rw correspond to read, write and read-write 
+
+		if T=='w' or T=='rw': 
 			if(not os.path.isdir(Directory)):
 				os.makedirs(Directory)
 			os.chdir(Directory)#"../Results/Generation_%d/Specie_%d/CFD" %(r,e))
@@ -34,7 +32,7 @@ class Specie(object):
 			np.savetxt('Rank',[self.Rank])
 			np.savetxt('Offspring',self.Offspring)
 		
-		if T==1 or T==2:
+		if T=='r' or T=='rw':
 			os.chdir(Directory)#"../Results/Generation_%d/Specie_%d/CFD" %(r,e))
 			self.X=np.loadtxt('Genes')
 			self.Cost=float(np.loadtxt('Cost'))

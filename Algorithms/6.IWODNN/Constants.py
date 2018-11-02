@@ -7,22 +7,22 @@ Row=2
 Col=2
 Func=1
 
-t=3
-Popn=20*t
-
+t=2
+Popn=30*t
+Popn1=100*t
 Popn2=10*t
 #Popn3=20*t
 
 
-Smax=4
-Smin=1
+Smax=20
+Smin=5
 
 Exponent = 3
 
 aSigma_init=0.1
 aSigma_final=0.001
 
-Social_factor=0.003
+Social_factor=0.0003
 
 
 sigma_initial = aSigma_init*(1-Social_factor)
@@ -42,6 +42,7 @@ Iter_max=100
 Current_Working_Directory=os.getcwd()
 Results_Directory='Results/Generation_%i/Specie_%i'
 Parent_Directory='Results/Generation_%i/Population/Specie_%i'
+Prediction_Directory='Results/Generation_%i/Predictions/Specie_%i'
 sys.path.append("../Functions/F1")
 import F
 

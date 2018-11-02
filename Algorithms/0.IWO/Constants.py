@@ -7,7 +7,7 @@ Row=2
 Col=2
 Func=1
 
-t=3
+t=50
 Popn=20*t
 
 Popn2=10*t
@@ -22,7 +22,7 @@ Exponent = 3
 aSigma_init=0.1
 aSigma_final=0.001
 
-Social_factor=0.003
+Social_factor=0.0003
 
 
 sigma_initial = aSigma_init*(1-Social_factor)

@@ -68,6 +68,7 @@ while Iter<=Iter_max:
 		sigma = sigma +sigma1
 		Specie_List[i].Offspring=np.array([S,sigma])
 
+	#Specie_Offspring_List=[]
 	g=0
 	for i in range(len(Specie_List)):
 		S,sigma=int(Specie_List[i].Offspring[0]),Specie_List[i].Offspring[1]
@@ -78,22 +79,24 @@ while Iter<=Iter_max:
 
 				Specie_Offspring.New(1,Specie_List[i].X,sigma)
 				Specie_Offspring.Read_Write(Results_Directory %(Iter,g),0)
+				#Specie_Offspring_List.append(Specie_Offspring)
 				g+=1
     
 
-
+	#print(len(Specie_Offspring_List))
 	
 	y = Pool()
 	Results = y.map(Run_parallel,range(g))
 	y.close()
 	y.join()    
-    
+    #'''
 	Specie_List1=[]#Specie_List
 	
 	for i in range(len(Results)):
 		Specie_List1.append(Specie(Results[i][0],Results[i][1]))
-		Specie_List1[i].Read_Write(Results_Directory %(Iter,g),0)
-
+		#Specie_List1[i].Read_Write(Results_Directory %(Iter,g),0)
+	
+	#'''
 
 
 	Specie_List1=Specie_List+Specie_List1
