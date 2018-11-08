@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from keras.models import load_model     
 from keras.models import model_from_json
-
+import random
 def Deep_neural_net(Z1,Z2,t='T',sample=[]):
 	if t=='T':
 		#print(np.max(Z2))
@@ -69,8 +69,9 @@ def func(Z1):
 	for i in range(len(Z2)):
 		Z2[i]=0
 		for j in range(len(Z1[i])):
-			Z2[i]+=(Z1[i][j][0]**2 + Z1[i][j][1]**2)/4000-np.cos(Z1[i][j][0]/2**(0.5))*np.cos(Z1[i][j][1]/2**(0.5))+1
-	
+			#Z2[i]+=(Z1[i][j][0]**2 + Z1[i][j][1]**2)/4000-np.cos(Z1[i][j][0]/2**(0.5))*np.cos(Z1[i][j][1]/2**(0.5))+1
+			Z2[i]=-20*np.exp(-0.2*np.sqrt(0.5*(Z1[i][j][0]**2+Z1[i][j][1]**2)))-np.exp(0.5*(np.cos(2*np.pi*Z1[i][j][0])+np.cos(2*np.pi*Z1[i][j][1])))+np.e+20
+			#Z2[i]=Z1[i][j][0]**2
 	
 	#for i in range(len(Z2)):
 	#	Z2[i]=0
@@ -79,14 +80,14 @@ def func(Z1):
 	
 	return Z2
 
-Z1=np.random.rand(100,10,2)*600
+Z1=np.random.rand(500,10,2)*random.choice([-1,1])*5
 #Z2=np.zeros((600,1))
 Z2=func(Z1)
 
 Deep_neural_net(Z1,Z2,'T')
 
 
-Z1=np.random.rand(20,10,2)*600
+Z1=np.random.rand(20,10,2)*random.choice([-1,1])*5
 #Z2=np.zeros((20,1))
 Z2=func(Z1)
 
