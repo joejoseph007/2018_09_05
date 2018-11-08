@@ -66,6 +66,8 @@ for i in range(Popn):
 	Specie_List.append(Specie())
 	Specie_List[i].New(0)
 	Specie_List[i].Read_Write(Results_Directory %(Iter,i),'w')
+	if i>=Popn/2:
+		break
 	#print(Specie_List[i].X)
 
 
@@ -76,6 +78,9 @@ y.close()
 y.join()    
 
 
+for i in range(len(Specie_List)):
+	print(Specie_List[i].X)
+
 
 #Write the results  
 for i in range(len(Specie_List)):
@@ -83,9 +88,10 @@ for i in range(len(Specie_List)):
 	Specie_List[i].Read_Write(Results_Directory %(Iter,i),'r')
 	#print(Specie_List[i].X,Specie_List[i].Cost)
 
+for i in range(len(Specie_List)):
+	print(Specie_List[i].X)
 
-
-#sys.exit()
+sys.exit()
 
 #ANN 1st Training on a parallel thread to save computational time
 #Training_thread=Th(target = Ann, args = (Specie_List,0))
