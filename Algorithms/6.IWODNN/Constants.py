@@ -7,15 +7,15 @@ Row=2
 Col=2
 Func=1
 
-t=2
+t=1
 Popn=30*t
 Popn1=100*t
 Popn2=10*t
 #Popn3=20*t
 
 
-Smax=20
-Smin=5
+Smax=5
+Smin=1
 
 Exponent = 3
 
@@ -37,7 +37,7 @@ sigma_worst = aSigma_init*(Social_factor)
 
 
 Iter=0
-Iter_max=100
+Iter_max=10
 
 Current_Working_Directory=os.getcwd()
 Results_Directory='Results/Generation_%i/Specie_%i'

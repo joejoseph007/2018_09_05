@@ -1,4 +1,4 @@
-import csv, random, re, sys, os, math, numpy as np, time, subprocess, shutil
+import csv, random, re, sys, os, math, numpy as np, time, subprocess, shutil,copy
 import matplotlib.pyplot as plt 
 from multiprocessing import Pool
 from threading import Thread as Th
@@ -67,17 +67,24 @@ for i in range(Popn):
 	Specie_List[i].New(0)
 	Specie_List[i].Read_Write(Results_Directory %(Iter,i),'w')
 
+
+
 #Cost_Evaluation
 y = Pool()
 Results=y.map(Run_parallel,range(Popn))
 y.close()
 y.join()    
 
+
+
 #Write the results  
 for i in range(len(Specie_List)):
-	Specie_List[i].Cost=Results[i][1]
-	Specie_List[i].Read_Write(Results_Directory %(Iter,i),'w')
-	print(Specie_List[i].X,Specie_List[i].Cost)
+	#Specie_List[i].Cost=Results[i][1]
+	Specie_List[i].Read_Write(Results_Directory %(Iter,i),'r')
+	#print(Specie_List[i].X,Specie_List[i].Cost)
+
+
+
 #sys.exit()
 
 #ANN 1st Training on a parallel thread to save computational time
@@ -119,23 +126,26 @@ while Iter<=Iter_max:
 		if S>0:
 			for j in range(S):
 				Specie_Offspring=Specie()
-
 				Specie_Offspring.New(1,Specie_List[i].X,sigma)
 				Specie_Offspring_List.append(Specie_Offspring)
-				del Specie_Offspring
+				#del Specie_Offspring
+				print(Specie_Offspring.X)
+				#print(Specie_List[i].X)
 				#Specie_Offspring.Read_Write(Results_Directory %(Iter,g),'w')
     
-	Predictions=Ann(Specie_Offspring_List,1)
 	
+	Predictions=Ann(Specie_Offspring_List,1)
+	#sys.exit()
+	Specie_Offspring_List1=copy.deepcopy(Specie_Offspring_List)
 	Check=[]
-	for i in range(len(Specie_Offspring_List)):
-		Specie_Offspring_List[i].Cost_run('qwe')
-		Check.append(Specie_Offspring_List[i].Cost)	
+	for i in range(len(Specie_Offspring_List1)):
+		Specie_Offspring_List1[i].Cost_run('qwe')
+		Check.append(Specie_Offspring_List1[i].Cost)	
 	
 		#print(Specie_Offspring_List[i].X)
 		#print(Specie_List[i].X)
 	
-	#plt.plot(Predictions)
+	plt.plot(Predictions)
 	plt.plot(Check)
 	plt.show()
 	sys.exit()
