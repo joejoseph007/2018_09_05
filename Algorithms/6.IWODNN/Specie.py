@@ -63,7 +63,7 @@ class Specie(object):
 					self.X[i][j]=min(self.X[i][j],Range[i][j][1])
 			#return 1
 	
-	def New(self,T,Z=np.zeros((Row,Col)),sigma=1,Taboo_list=[]):
+	def New(self,T,Z=np.zeros((Row,Col)),sigma=1):
 		
 		
 		
@@ -74,9 +74,10 @@ class Specie(object):
 			for j in range(len(self.X[0])):
 				while 1:
 					if T==0:
-						self.X[i][j]=random.uniform(Range[i][j][0],Range[i][j][1])
+						self.X[i][j]=np.random.rand()*(Range[i][j][1]-Range[i][j][0])+Range[i][j][0] #random.uniform(Range[i][j][0],Range[i][j][1])
 						if self.Range_chk_slic(0):
 							break
+					
 					if T==1:
 						self.X[i][j]=np.random.normal(Z[i][j],(Range[i][j][1]-Range[i][j][0])*sigma)
 						#print(self.X[i][j],Z[i][j])#,Taboo_list[k].X[i][j],sigma1)
@@ -84,34 +85,7 @@ class Specie(object):
 						if self.Range_chk_slic(0):
 							break
 					
-						'''
 						
-						if (len(Taboo_list)):
-							temp=1
-							for k in range(len(Taboo_list)):
-								#print("self.X[i][j]",self.X[i][j],sigma)
-								sigma1=Taboo_list[k].Taboo
-								if (self.X[i][j]>=Taboo_list[k].X[i][j]-sigma1 and self.X[i][j]<=Taboo_list[k].X[i][j]+sigma1):
-									
-									#time.sleep(1)
-									temp=0
-									#print('duplicate')
-									break       
-							if temp==1:
-								break
-						else:
-							break
-						'''
-						#for i in range(len(Taboo_list)):
-						
-						#if self.Range_chk_slic(0):
-						#	break
-					#if T==2:
-							#self.X[i][j]=Specie[0].X[i][j]
-							#if self.Range_chk_slic(0):
-								#break
-		#k+=1	
-		#self.X=np.round(self.X,3)
 		self.Range_chk_slic(1)
 		#return X
 		

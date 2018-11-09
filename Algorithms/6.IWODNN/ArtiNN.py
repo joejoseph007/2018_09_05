@@ -8,8 +8,8 @@ def Deep_neural_net(Z1,Z2,t='T',sample=[]):
 	if t=='T':
 		#print(np.max(Z2))
 		np.savetxt('Normalisation',[np.max(Z2)])
-		Z1=Z1/np.max(Z1)
-		Z2=Z2/np.max(Z2)
+		Z1=Z1/np.max(Z1)#-np.min(Z1)
+		Z2=Z2/np.max(Z2)#-np.min(Z2)
 			
 		model = tf.keras.models.Sequential([tf.keras.layers.Flatten()])
 		model.add(tf.keras.layers.Dense(1024,kernel_initializer='uniform',activation=tf.nn.relu))
@@ -43,7 +43,7 @@ def Deep_neural_net(Z1,Z2,t='T',sample=[]):
 	if t=='P': 
 		Normalisation=np.loadtxt('Normalisation')
 		print(Normalisation)
-		sample=sample/np.max(sample)
+		sample=sample/np.max(sample)#-np.min(sample)
 		
 		json_file = open('Neural_Netork_model.json', 'r')
 		loaded_model_json = json_file.read()
@@ -58,7 +58,7 @@ def Deep_neural_net(Z1,Z2,t='T',sample=[]):
 		
 		prediction=model.predict(sample)
 		
-		return prediction*Normalisation
+		return prediction*Normalisation#+np.min(prediction)
 
 
 
@@ -80,7 +80,7 @@ def func(Z1):
 	
 	return Z2
 
-Z1=np.random.rand(500,10,2)*random.choice([-1,1])*5
+Z1=np.random.rand(100,10,2)*random.choice([-1,1])*5
 #Z2=np.zeros((600,1))
 Z2=func(Z1)
 
