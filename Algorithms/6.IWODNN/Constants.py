@@ -9,8 +9,8 @@ Func=1
 
 t=1
 Popn=40*t
-Popn1=20*t
-Popn2=10*t
+Popn1=10*t
+Popn2=30*t
 #Popn3=20*t
 
 
@@ -19,7 +19,7 @@ Smin=0
 
 Exponent = 3
 
-aSigma_init=0.1
+aSigma_init=0.25
 aSigma_final=0.001
 
 Social_factor=0.0001

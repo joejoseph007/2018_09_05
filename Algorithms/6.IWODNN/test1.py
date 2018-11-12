@@ -27,7 +27,7 @@ def Run_parallel(i):
 	Specie_List1.Read_Write(Results_Directory %(Iter,i),'r')
 	Specie_List1.Cost_run(Results_Directory %(Iter,i))
 	Specie_List1.Read_Write(Results_Directory %(Iter,i),'w')
-	Obj_call+=1
+	#Obj_call+=1
 	return Specie_List1.X,Specie_List1.Cost#Roundoff(Specie_List1[0].X),Roundoff(Specie_List1[0].Cost)
 
 
@@ -93,9 +93,12 @@ for i in range(Popn):
 
 #Cost_Evaluation
 y = Pool()
-Results=y.map(Run_parallel,range(Popn))
+y.map(Run_parallel,range(Popn))
+#Results=y.map(Run_parallel,range(Popn))
 y.close()
 y.join()    
+
+Obj_call+=Popn
 
 
 #Write the results  
@@ -106,9 +109,7 @@ for i in range(len(Specie_List)):
 
 #sys.exit()
 
-#ANN 1st Training on a parallel thread to save computational time
-#Training_thread=Th(target = Ann, args = (Specie_List,0))
-#Training_thread.start()
+
 #Can be done without threads 
 #Ann(Specie_List,0)
 
@@ -120,12 +121,17 @@ print(Specie_List[0].X,Specie_List[0].Cost)
 Iter+=1
 
 while Iter<=Iter_max:
+	#ANN 1st Training on a parallel thread to save computational time
+	#Training_thread=Th(target = Ann, args = (Specie_List,0))
+	#Training_thread.start()
+
 	Ann(Specie_List,0)
 	
 	
 	Cost=Specie_List[0].Lists(Specie_List,1)
 	Specie_List[0].Rank_Assign(Specie_List)
 	Rank_List=Specie_List[0].Lists(Specie_List,2)
+	
 	print('Generation',Iter)
 	print(Specie_List[0].X,Specie_List[0].Cost)
 
@@ -141,6 +147,7 @@ while Iter<=Iter_max:
 
 
 	#Training_thread.join()
+	
 	Specie_Offspring_List=[]
 	a=[]
 	g=0
@@ -152,7 +159,7 @@ while Iter<=Iter_max:
 				B=copy.deepcopy(Specie())
 				Specie_Offspring_List.append(B)
 				Specie_Offspring_List[g].New(1,Specie_List[i].X,sigma)
-				#Specie_Offspring_List[g].Read_Write(Prediction_Directory %(Iter,g),'w')				
+				Specie_Offspring_List[g].Read_Write(Prediction_Directory %(Iter,g),'w')				
 				#a.append(Specie())
 				#a[g].New(1,Specie_List[i].X,sigma)
 				#print(a[g].X)
@@ -178,7 +185,7 @@ while Iter<=Iter_max:
 	
 	
 	
-	#'''
+	'''
 	#sys.exit()
 	Specie_Offspring_List1=copy.deepcopy(Specie_Offspring_List)
 	Check=[]
@@ -192,8 +199,13 @@ while Iter<=Iter_max:
 	plt.plot(Predictions)
 	plt.plot(Check)
 	plt.show()
-	sys.exit()
-	#'''
+	#sys.exit()
+	'''
+	
+
+
+	#print('Here')	
+	#print(len(Specie_Offspring_List))
 	
 	for i in range(len(Predictions)):
 		Specie_Offspring_List[i].Cost=Predictions[i]
@@ -217,23 +229,24 @@ while Iter<=Iter_max:
 	Results = y.map(Run_parallel,range(len(Specie_List1)))
 	y.close()
 	y.join()    
-   
+	Obj_call+=len(Specie_List1)
+
     #'''
-	Specie_List2=[]#Specie_List
+	
+	#Specie_List1=[]#Specie_List
 	for i in range(len(Results)):
-		Specie_List2.append(Specie(Results[i][0],Results[i][1]))
-		Specie_List2[i].Read_Write(Results_Directory %(Iter,g),'w')
+		Specie_List1[i].Read_Write(Results_Directory %(Iter,i),'r')
 
 	#'''
 
-	Specie_List2=Specie_List+Specie_List2
+	Specie_List1=Specie_List+Specie_List1
 
-	Cost1=Specie_List[0].Lists(Specie_List2,1)
+	Cost1=Specie_List[0].Lists(Specie_List1,1)
 
 	xy=Specie_List[0].Lists(Specie_List,0)
 	#print(xy)
-	xy1=Specie_List[0].Lists(Specie_List2,0)
-
+	xy1=Specie_List[0].Lists(Specie_List1,0)
+	xy2=Specie_List[0].Lists(Specie_Offspring_List,0)
 	
 	#plt.savefig('Pics/%i.0.svg'%Iter,s=20,c='red')
 
@@ -279,7 +292,7 @@ while Iter<=Iter_max:
 
 	Rank_List=Specie_List[0].Rank_Assign(Specie_List1)
 
-	Specie_List = [Specie_List2[i] for i in Rank_List]
+	Specie_List = [Specie_List1[i] for i in Rank_List]
 
 	#Temp=Specie_List[Popn2:]
 	
@@ -300,7 +313,7 @@ while Iter<=Iter_max:
 	Iter+=1
 
 
-
+print('Obj_Call',Obj_call)
 
 thefile = open('FinalCalls', 'w')
 thefile.write("%i" %Obj_call)
