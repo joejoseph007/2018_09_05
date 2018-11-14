@@ -26,7 +26,7 @@ def Run_parallel(i):
 	Specie_List1.Read_Write(Results_Directory %(Iter,i),1)
 	Specie_List1.Cost_run(Results_Directory %(Iter,i))
 	Specie_List1.Read_Write(Results_Directory %(Iter,i),0)
-	Obj_call+=1
+	
 	return Specie_List1.X,Specie_List1.Cost#Roundoff(Specie_List1[0].X),Roundoff(Specie_List1[0].Cost)
 
 
@@ -42,7 +42,7 @@ y = Pool()
 y.map(Run_parallel,range(Popn))
 y.close()
 y.join()    
-
+Obj_call+=Popn
 
 for i in range(len(Specie_List)):
 	Specie_List[i].Read_Write(Results_Directory %(Iter,i),1)
@@ -89,6 +89,7 @@ while Iter<=Iter_max:
 	Results = y.map(Run_parallel,range(g))
 	y.close()
 	y.join()    
+	Obj_call+=g
     #'''
 	Specie_List1=[]#Specie_List
 	

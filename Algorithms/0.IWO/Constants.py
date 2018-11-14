@@ -7,7 +7,7 @@ Row=2
 Col=2
 Func=1
 
-t=50
+t=10
 Popn=20*t
 
 Popn2=10*t
@@ -42,6 +42,6 @@ Iter_max=100
 Current_Working_Directory=os.getcwd()
 Results_Directory='Results/Generation_%i/Specie_%i'
 Parent_Directory='Results/Generation_%i/Population/Specie_%i'
-sys.path.append("../Functions/F1")
+sys.path.append("../Functions/F7")
 import F
 
